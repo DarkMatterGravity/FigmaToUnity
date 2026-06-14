@@ -1,0 +1,17 @@
+{
+  "name": "figma-to-unity-plugin",
+  "version": "1.0.0",
+  "description": "Figma plugin to export designs to Unity UGUI",
+  "scripts": {
+    "build": "esbuild code.ts --bundle --outfile=code.js --target=es2017 --format=iife"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.123.0",
+    "@types/jszip": "^3.4.0",
+    "esbuild": "^0.27.4",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  }
+}

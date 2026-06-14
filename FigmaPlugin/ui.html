@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Figma to Unity UGUI Exporter</title>
+
+  <script src="./jszip.min.js"></script>
+
+  <style>
+    :root{
+      --bg0:#0b0f14;
+      --bg1:#0f1620;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(255,255,255,.14);
+      --text:#e9eef6;
+      --muted:rgba(233,238,246,.65);
+      --muted2:rgba(233,238,246,.45);
+      --blue:#4cc2ff;
+      --yellow:#f4c542;
+      --red:#ff6b6b;
+      --green:#34d399;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.40);
+      --radius:14px;
+      --radius2:12px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font: 13px/1.35 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 18% 8%, rgba(76,194,255,.18), transparent 60%),
+        radial-gradient(700px 500px at 78% 22%, rgba(244,197,66,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      overflow:hidden;
+    }
+
+    .wrap{
+      height:100%;
+      display:flex;
+      padding:14px;
+    }
+
+    .card{
+      width:100%;
+      height:100%;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .header{
+      padding:14px 14px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
+    }
+
+    .title{
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:.2px;
+      margin:0;
+    }
+    .subtitle{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .content{
+      padding:14px;
+      overflow:auto;
+      flex:1;
+    }
+
+    .section{
+      border:1px solid rgba(255,255,255,.09);
+      background: rgba(0,0,0,.12);
+      border-radius: var(--radius2);
+      padding:12px;
+      box-shadow: var(--shadow2);
+      margin-bottom:12px;
+    }
+
+    .section h3{
+      margin:0 0 10px;
+      font-size:12px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      color:rgba(233,238,246,.78);
+      font-weight:700;
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .field{
+      flex:1;
+      min-width:140px;
+    }
+
+    label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin:0 0 6px;
+    }
+
+    select, input[type="text"]{
+      width:100%;
+      height:34px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+      padding:0 10px;
+      font-size:13px;
+    }
+    select:focus, input[type="text"]:focus{
+      border-color: rgba(76,194,255,.55);
+      box-shadow: 0 0 0 3px rgba(76,194,255,.14);
+    }
+    select{
+      appearance:none;
+    }
+
+    .hint{
+      margin-top:8px;
+      font-size:12px;
+      color:var(--muted2);
+    }
+
+    .btnRow{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      height:34px;
+      padding:0 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:650;
+      letter-spacing:.15px;
+      transition: transform .04s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
+      user-select:none;
+    }
+    button:active{ transform: translateY(1px); }
+    button:hover{ background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.14); }
+    button:disabled{ opacity:.45; cursor:not-allowed; }
+
+    .primary{
+      border-color: rgba(76,194,255,.35);
+      background: rgba(76,194,255,.18);
+    }
+    .primary:hover{ background: rgba(76,194,255,.22); border-color: rgba(76,194,255,.50); }
+
+    .downloadReady{
+      border-color: rgba(244,197,66,.55) !important;
+      background: rgba(244,197,66,.95) !important;
+      color: #17130a !important;
+      text-shadow:none;
+    }
+    .downloadReady:hover{
+      background: rgba(244,197,66,1) !important;
+      border-color: rgba(244,197,66,.70) !important;
+    }
+
+    .gridHints{
+      display:grid;
+      grid-template-columns: 90px 1fr;
+      gap:8px 12px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .tag{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: rgba(76,194,255,.95);
+      font-weight:700;
+      letter-spacing:.15px;
+      white-space:nowrap;
+    }
+    .tag.alt{ color: rgba(244,197,66,.95); }
+
+    .statusBox{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.55);
+      border-radius: 12px;
+      padding:10px;
+      height:120px;
+      overflow:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      line-height:1.35;
+      white-space:pre-wrap;
+    }
+
+    .line.ok{ color: var(--green); }
+    .line.warn{ color: var(--yellow); }
+    .line.err{ color: var(--red); }
+
+    .footer{
+      padding:10px 14px 12px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(233,238,246,.40);
+      text-align:center;
+      font-size:11px;
+      background: rgba(0,0,0,.08);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="title">Figma to Unity <span style="color:rgba(233,238,246,.65);font-weight:650">UGUI Exporter</span></div>
+        <div class="subtitle">Export Figma designs to Unity UI prefabs</div>
+      </div>
+
+      <div class="content">
+        <div class="section">
+          <div class="row">
+            <div class="field">
+              <label for="scale">Image Scale</label>
+              <select id="scale">
+                <option value="1">1x</option>
+                <option value="2" selected>2x</option>
+                <option value="3">3x</option>
+                <option value="4">4x</option>
+              </select>
+            </div>
+          </div>
+          <div class="hint">Scale affects PNG resolution only. Layout and hierarchy are unchanged.</div>
+
+          <div style="margin-top:12px">
+            <label for="exportPath">Export Path (for Save to Folder)</label>
+            <input type="text" id="exportPath" placeholder="D:\MyProject\Assets\UI" />
+            <div class="hint">Files save directly here when using "Save to Folder" (requires helper running)</div>
+          </div>
+
+          <div class="btnRow">
+            <button id="exportBtn" class="primary">Export Selected Frame</button>
+            <button id="exportAllBtn">Export All Frames</button>
+          </div>
+          <div class="btnRow">
+            <button id="saveToFolderBtn" disabled>Save to Folder</button>
+            <button id="downloadBtn" disabled>Download ZIP</button>
+            <button id="clearBtn">Clear</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Layer Naming Conventions</h3>
+          <div class="gridHints">
+            <div class="tag">CTN_</div><div>Container only (no image bake, recurses into children)</div>
+            <div class="tag">BTN_</div><div>Baked image + Unity Button component</div>
+            <div class="tag">IMG_</div><div>Baked composite image</div>
+            <div class="tag">ICON_</div><div>Baked icon image</div>
+            <div class="tag">9SLICE_</div><div>9-slice scalable background</div>
+            <div class="tag alt">TEXT</div><div>Native text (TextMeshPro, not baked)</div>
+          </div>
+          <div class="hint" style="margin-top:10px">
+            Unprefixed groups under the root frame are automatically baked as composite images.
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Status</h3>
+          <div id="status" class="statusBox"></div>
+        </div>
+      </div>
+
+      <div class="footer">Figma to Unity UGUI Exporter v1.0</div>
+    </div>
+  </div>
+
+  <script>
+    // ------- DOM -------
+    const scaleEl = document.getElementById("scale");
+    const exportPathEl = document.getElementById("exportPath");
+    const exportBtn = document.getElementById("exportBtn");
+    const exportAllBtn = document.getElementById("exportAllBtn");
+    const saveToFolderBtn = document.getElementById("saveToFolderBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const statusEl = document.getElementById("status");
+
+    // ------- Config -------
+    const HELPER_URL = "http://localhost:9876";
+
+    // ------- State -------
+    let pendingFiles = null;
+    let pendingZipBase64 = null;
+    let pendingZipName = "Export.zip";
+
+    // Load saved export path from localStorage
+    try {
+      const savedPath = localStorage.getItem("figmaExportPath");
+      if (savedPath) exportPathEl.value = savedPath;
+    } catch (e) {}
+
+    // Save export path when changed
+    exportPathEl.addEventListener("change", () => {
+      try {
+        localStorage.setItem("figmaExportPath", exportPathEl.value);
+      } catch (e) {}
+    });
+
+    // ------- Helpers -------
+    function log(msg, kind="ok") {
+      const line = document.createElement("div");
+      line.className = "line " + (kind || "ok");
+      line.textContent = msg;
+      statusEl.appendChild(line);
+      statusEl.scrollTop = statusEl.scrollHeight;
+    }
+
+    function resetDownload() {
+      pendingFiles = null;
+      pendingZipBase64 = null;
+      pendingZipName = "Export.zip";
+      downloadBtn.disabled = true;
+      downloadBtn.classList.remove("downloadReady");
+      saveToFolderBtn.disabled = true;
+      saveToFolderBtn.classList.remove("downloadReady");
+    }
+
+    function enableDownload() {
+      downloadBtn.disabled = false;
+      downloadBtn.classList.add("downloadReady");
+      saveToFolderBtn.disabled = false;
+      saveToFolderBtn.classList.add("downloadReady");
+    }
+
+    async function saveFilesToFolder() {
+      if (!pendingFiles || !pendingFiles.length) {
+        log("No files to save. Export first.", "warn");
+        return;
+      }
+
+      const exportPath = exportPathEl.value.trim();
+      if (!exportPath) {
+        log("Please enter an export path first.", "warn");
+        return;
+      }
+
+      log("Connecting to helper...", "warn");
+
+      try {
+        const response = await fetch(HELPER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            exportDir: exportPath,
+            files: pendingFiles
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Helper returned status " + response.status);
+        }
+
+        const result = await response.json();
+        if (result.status === "ok") {
+          log("Saved " + result.count + " files to " + result.exportDir, "ok");
+        } else {
+          log("Helper error: " + (result.message || "Unknown error"), "err");
+        }
+      } catch (e) {
+        if (e.message.includes("Failed to fetch") || e.message.includes("NetworkError")) {
+          log("Cannot connect to helper. Make sure figma_export_helper.py is running.", "err");
+          log("Run: python figma_export_helper.py", "warn");
+        } else {
+          log("Save failed: " + e.message, "err");
+        }
+      }
+    }
+
+    function bytesFromBase64(b64) {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes;
+    }
+
+    function downloadBlob(blob, filename) {
+      const a = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ------- UI actions -------
+    exportBtn.onclick = () => {
+      resetDownload();
+      const scale = Number(scaleEl.value) || 1;
+      log("Processing export...", "warn");
+      parent.postMessage({ pluginMessage: { type: "EXPORT", scale } }, "*");
+    };
+
+    exportAllBtn.onclick = () => {
+      resetDownload();
+      const scale = Number(scaleEl.value) || 1;
+      log("Exporting all frames...", "warn");
+      log("Select a Section to export frames within it, or leave unselected for all page frames.", "ok");
+      parent.postMessage({ pluginMessage: { type: "EXPORT_ALL", scale } }, "*");
+    };
+
+    clearBtn.onclick = () => {
+      statusEl.innerHTML = "";
+      resetDownload();
+      log("Cleared. Ready to export.", "ok");
+      parent.postMessage({ pluginMessage: { type: "CLEAR" } }, "*");
+    };
+
+    saveToFolderBtn.onclick = () => {
+      saveFilesToFolder();
+    };
+
+    downloadBtn.onclick = async () => {
+      try {
+        log("Preparing download...", "warn");
+
+        // Preferred: main thread already created zip (ZIP_READY)
+        if (pendingZipBase64) {
+          const bytes = bytesFromBase64(pendingZipBase64);
+          downloadBlob(new Blob([bytes], { type: "application/zip" }), pendingZipName);
+          log("Downloaded " + pendingZipName, "ok");
+          return;
+        }
+
+        // Fallback: UI-side zipping from files
+        if (!pendingFiles || !pendingFiles.length) {
+          log("Nothing to download. Export first.", "warn");
+          return;
+        }
+        if (typeof JSZip === "undefined") {
+          log("Download failed: JSZip missing. Ensure jszip.min.js is next to ui.html.", "err");
+          return;
+        }
+
+        const zip = new JSZip();
+        for (const f of pendingFiles) {
+          if (!f || !f.path || !f.base64) continue;
+          zip.file(f.path, bytesFromBase64(f.base64));
+        }
+
+        const zipBytes = await zip.generateAsync({ type: "uint8array" });
+        downloadBlob(new Blob([zipBytes], { type: "application/zip" }), pendingZipName);
+        log("Downloaded " + pendingZipName, "ok");
+      } catch (e) {
+        log("Download failed: " + (e && e.message ? e.message : String(e)), "err");
+      }
+    };
+
+    // ------- Messages from plugin (code.ts) -------
+    window.onmessage = (event) => {
+      const msg = event?.data?.pluginMessage;
+      if (!msg) return;
+
+      if (msg.type === "ZIP_READY") {
+        pendingZipBase64 = msg.zipBase64 || msg.base64 || null;
+        pendingZipName = msg.zipName || msg.name || "Export.zip";
+        pendingFiles = Array.isArray(msg.files) ? msg.files : null;
+        if (pendingZipBase64) {
+          enableDownload();
+          log("Export ready. " + (msg.fileCount ? msg.fileCount + " files." : ""), "ok");
+        } else {
+          log("ZIP_READY received but zipBase64 was empty.", "err");
+        }
+        return;
+      }
+
+      if (msg.type === "EXPORT_RESULT") {
+        pendingFiles = Array.isArray(msg.files) ? msg.files : [];
+        pendingZipName = msg.zipName || "Export.zip";
+
+        if (pendingFiles.length) {
+          enableDownload();
+          log("Export ready (" + pendingFiles.length + " files)", "ok");
+        } else {
+          log("Export complete, but file list was empty.", "err");
+        }
+        return;
+      }
+
+      if (msg.type === "ERROR") {
+        log("Export failed: " + (msg.message || "Unknown error"), "err");
+        resetDownload();
+        return;
+      }
+    };
+
+    // Boot
+    resetDownload();
+    log("Ready. Select a frame and export.", "ok");
+  </script>
+</body>
+</html>

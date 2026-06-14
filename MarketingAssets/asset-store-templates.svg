@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6000 4500">
+  <defs>
+    <style>
+      .frame-bg { fill: #1a1a2e; }
+      .frame-stroke { fill: none; stroke: #4cc2ff; stroke-width: 2; stroke-dasharray: 10,5; }
+      .label { font-family: Inter, system-ui, sans-serif; fill: #ffffff; }
+      .sublabel { font-family: Inter, system-ui, sans-serif; fill: #888899; }
+      .section-label { font-family: Inter, system-ui, sans-serif; fill: #4cc2ff; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="6000" height="4500" fill="#0f0f1a"/>
+
+  <!-- ==================== FIGMA COMMUNITY SECTION ==================== -->
+  <text x="100" y="80" class="section-label" font-size="48">FIGMA COMMUNITY PLUGIN</text>
+
+  <!-- Figma Cover Image 1920x1080 -->
+  <g transform="translate(100, 120)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="500" class="label" font-size="36" text-anchor="middle">Figma Plugin Cover</text>
+    <text x="960" y="560" class="sublabel" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+    <text x="960" y="620" class="sublabel" font-size="20" text-anchor="middle">Show plugin UI + example Figma design</text>
+  </g>
+
+  <!-- Figma Screenshot 1 -->
+  <g transform="translate(2120, 120)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="500" class="label" font-size="36" text-anchor="middle">Figma Screenshot 1</text>
+    <text x="960" y="560" class="sublabel" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+    <text x="960" y="620" class="sublabel" font-size="20" text-anchor="middle">Export flow demonstration</text>
+  </g>
+
+  <!-- Figma Screenshot 2 -->
+  <g transform="translate(100, 1280)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="500" class="label" font-size="36" text-anchor="middle">Figma Screenshot 2</text>
+    <text x="960" y="560" class="sublabel" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+    <text x="960" y="620" class="sublabel" font-size="20" text-anchor="middle">Layer naming conventions</text>
+  </g>
+
+  <!-- ==================== UNITY ASSET STORE SECTION ==================== -->
+  <text x="2120" y="1240" class="section-label" font-size="48">UNITY ASSET STORE</text>
+
+  <!-- Unity Icon 160x160 -->
+  <g transform="translate(2120, 1280)">
+    <rect class="frame-bg" width="160" height="160" rx="4"/>
+    <rect class="frame-stroke" width="160" height="160" rx="4"/>
+    <text x="80" y="75" class="label" font-size="14" text-anchor="middle">Icon</text>
+    <text x="80" y="95" class="sublabel" font-size="12" text-anchor="middle">160×160</text>
+  </g>
+
+  <!-- Unity Card 420x280 -->
+  <g transform="translate(2320, 1280)">
+    <rect class="frame-bg" width="420" height="280" rx="4"/>
+    <rect class="frame-stroke" width="420" height="280" rx="4"/>
+    <text x="210" y="130" class="label" font-size="24" text-anchor="middle">Card Image</text>
+    <text x="210" y="165" class="sublabel" font-size="18" text-anchor="middle">420 × 280 px</text>
+  </g>
+
+  <!-- Unity Social Media 1200x630 -->
+  <g transform="translate(2780, 1280)">
+    <rect class="frame-bg" width="1200" height="630" rx="4"/>
+    <rect class="frame-stroke" width="1200" height="630" rx="4"/>
+    <text x="600" y="290" class="label" font-size="32" text-anchor="middle">Social Media</text>
+    <text x="600" y="340" class="sublabel" font-size="24" text-anchor="middle">1200 × 630 px</text>
+    <text x="600" y="380" class="sublabel" font-size="16" text-anchor="middle">No text/logos for promo eligibility</text>
+  </g>
+
+  <!-- Unity Cover/Key Image 1950x1300 -->
+  <g transform="translate(100, 2440)">
+    <rect class="frame-bg" width="1950" height="1300" rx="8"/>
+    <rect class="frame-stroke" width="1950" height="1300" rx="8"/>
+    <text x="975" y="600" class="label" font-size="40" text-anchor="middle">Unity Cover / Key Image</text>
+    <text x="975" y="660" class="sublabel" font-size="30" text-anchor="middle">1950 × 1300 px</text>
+    <text x="975" y="720" class="sublabel" font-size="20" text-anchor="middle">Main store listing image - show Unity Editor with imported UI</text>
+  </g>
+
+  <!-- Unity Screenshot 1 - 2400x1600 -->
+  <g transform="translate(2150, 1980)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Unity Screenshot 1</text>
+    <text x="1200" y="820" class="sublabel" font-size="32" text-anchor="middle">2400 × 1600 px</text>
+    <text x="1200" y="890" class="sublabel" font-size="22" text-anchor="middle">Show importer window + generated prefab hierarchy</text>
+  </g>
+
+</svg>

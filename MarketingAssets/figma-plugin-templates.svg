@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4100 2400">
+  <defs>
+    <style>
+      .frame-bg { fill: #1e1e2e; }
+      .frame-stroke { fill: none; stroke: #a259ff; stroke-width: 3; stroke-dasharray: 12,6; }
+      .label { font-family: Inter, system-ui, sans-serif; fill: #ffffff; }
+      .sublabel { font-family: Inter, system-ui, sans-serif; fill: #888899; }
+      .figma-purple { fill: #a259ff; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="4100" height="2400" fill="#0a0a14"/>
+
+  <!-- Title -->
+  <text x="100" y="80" font-family="Inter, system-ui, sans-serif" fill="#a259ff" font-size="48" font-weight="bold">FIGMA COMMUNITY - PLUGIN IMAGES (1920 × 1080 px)</text>
+
+  <!-- Cover Image -->
+  <g transform="translate(100, 120)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+
+    <!-- Figma canvas mockup area -->
+    <rect x="40" y="40" width="1440" height="1000" fill="#2c2c3a" rx="4"/>
+    <text x="760" y="500" class="sublabel" font-size="24" text-anchor="middle">← Figma Canvas Area →</text>
+    <text x="760" y="540" class="sublabel" font-size="18" text-anchor="middle">Place your UI design screenshot here</text>
+
+    <!-- Plugin window mockup area -->
+    <rect x="1500" y="40" width="380" height="700" fill="#0f1620" rx="8" stroke="#4cc2ff" stroke-width="2"/>
+    <text x="1690" y="360" class="label" font-size="20" text-anchor="middle">Plugin</text>
+    <text x="1690" y="390" class="label" font-size="20" text-anchor="middle">Window</text>
+    <text x="1690" y="430" class="sublabel" font-size="14" text-anchor="middle">380 × 700</text>
+
+    <!-- Labels -->
+    <text x="960" y="1040" class="label" font-size="28" text-anchor="middle">Cover Image - 1920 × 1080 px</text>
+  </g>
+
+  <!-- Screenshot 1 -->
+  <g transform="translate(2100, 120)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="480" class="label" font-size="36" text-anchor="middle">Screenshot 1</text>
+    <text x="960" y="530" class="sublabel" font-size="24" text-anchor="middle">Export Flow Demo</text>
+    <text x="960" y="580" class="sublabel" font-size="18" text-anchor="middle">Show: Select frame → Open plugin → Export → Download</text>
+    <text x="960" y="1040" class="label" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+  </g>
+
+  <!-- Screenshot 2 -->
+  <g transform="translate(100, 1280)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="480" class="label" font-size="36" text-anchor="middle">Screenshot 2</text>
+    <text x="960" y="530" class="sublabel" font-size="24" text-anchor="middle">Layer Naming Conventions</text>
+    <text x="960" y="580" class="sublabel" font-size="18" text-anchor="middle">Show Figma Layers panel with BTN_, IMG_, CTN_, TEXT prefixes</text>
+    <text x="960" y="1040" class="label" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+  </g>
+
+  <!-- Screenshot 3 -->
+  <g transform="translate(2100, 1280)">
+    <rect class="frame-bg" width="1920" height="1080" rx="8"/>
+    <rect class="frame-stroke" width="1920" height="1080" rx="8"/>
+    <text x="960" y="480" class="label" font-size="36" text-anchor="middle">Screenshot 3</text>
+    <text x="960" y="530" class="sublabel" font-size="24" text-anchor="middle">Export Output</text>
+    <text x="960" y="580" class="sublabel" font-size="18" text-anchor="middle">Show ZIP contents: _Screen.json + _Images/ folder</text>
+    <text x="960" y="1040" class="label" font-size="28" text-anchor="middle">1920 × 1080 px</text>
+  </g>
+
+</svg>

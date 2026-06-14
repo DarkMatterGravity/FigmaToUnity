@@ -1,0 +1,61 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# MemoryCaptures
+[Mm]emoryCaptures/
+
+# Asset meta data
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity Package Manager
+/[Pp]ackages/packages-lock.json
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Rider
+.idea/
+
+# Visual Studio
+.vs/
+
+# Crashlytics
+crashlytics-build.properties
+sysinfo.txt
+
+# Node modules (Figma plugin)
+FigmaPlugin/node_modules/
+
+# Figma plugin build output
+FigmaPlugin/code.js
+FigmaPlugin/code.js.map

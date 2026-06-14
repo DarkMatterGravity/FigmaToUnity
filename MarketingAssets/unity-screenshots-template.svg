@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7400 5200">
+  <defs>
+    <style>
+      .frame-bg { fill: #1a1a2e; }
+      .frame-stroke { fill: none; stroke: #f4c542; stroke-width: 3; stroke-dasharray: 12,6; }
+      .label { font-family: Inter, system-ui, sans-serif; fill: #ffffff; }
+      .sublabel { font-family: Inter, system-ui, sans-serif; fill: #888899; }
+      .number { font-family: Inter, system-ui, sans-serif; fill: #f4c542; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="7400" height="5200" fill="#0a0a14"/>
+
+  <!-- Title -->
+  <text x="100" y="80" font-family="Inter, system-ui, sans-serif" fill="#f4c542" font-size="48" font-weight="bold">UNITY ASSET STORE - SCREENSHOTS (2400 × 1600 px each)</text>
+
+  <!-- Screenshot 1 -->
+  <g transform="translate(100, 120)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">1</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Importer Window Overview</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">Show the FigmaImporterWindow with all settings visible</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">Tools > Figma > Import to Unity...</text>
+  </g>
+
+  <!-- Screenshot 2 -->
+  <g transform="translate(2600, 120)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">2</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Before & After Comparison</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">Split view: Figma design (left) → Unity prefab (right)</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">Highlight visual fidelity</text>
+  </g>
+
+  <!-- Screenshot 3 -->
+  <g transform="translate(5100, 120)">
+    <rect class="frame-bg" width="2200" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2200" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">3</text>
+    <text x="1100" y="750" class="label" font-size="44" text-anchor="middle">Generated Hierarchy</text>
+    <text x="1100" y="820" class="sublabel" font-size="28" text-anchor="middle">Unity Hierarchy panel showing</text>
+    <text x="1100" y="870" class="sublabel" font-size="22" text-anchor="middle">organized prefab structure</text>
+  </g>
+
+  <!-- Screenshot 4 -->
+  <g transform="translate(100, 1820)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">4</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Component Inspector</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">Show FigmaVariantController, FigmaEntryAnimation</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">or other generated components in Inspector</text>
+  </g>
+
+  <!-- Screenshot 5 -->
+  <g transform="translate(2600, 1820)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">5</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Auto-Layout → LayoutGroups</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">Figma auto-layout converted to</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">HorizontalLayoutGroup / VerticalLayoutGroup</text>
+  </g>
+
+  <!-- Screenshot 6 -->
+  <g transform="translate(5100, 1820)">
+    <rect class="frame-bg" width="2200" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2200" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">6</text>
+    <text x="1100" y="750" class="label" font-size="44" text-anchor="middle">TextMeshPro Text</text>
+    <text x="1100" y="820" class="sublabel" font-size="28" text-anchor="middle">Native text styling preserved</text>
+    <text x="1100" y="870" class="sublabel" font-size="22" text-anchor="middle">Font, size, color, alignment</text>
+  </g>
+
+  <!-- Screenshot 7 -->
+  <g transform="translate(100, 3520)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">7</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Entry Animations</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">FigmaEntryAnimation in action</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">PopIn, FadeIn, SlideFrom with stagger</text>
+  </g>
+
+  <!-- Screenshot 8 -->
+  <g transform="translate(2600, 3520)">
+    <rect class="frame-bg" width="2400" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2400" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">8</text>
+    <text x="1200" y="750" class="label" font-size="44" text-anchor="middle">Screen Navigation</text>
+    <text x="1200" y="820" class="sublabel" font-size="28" text-anchor="middle">UIScreenManager + prototype navigation</text>
+    <text x="1200" y="870" class="sublabel" font-size="22" text-anchor="middle">auto-wired from Figma interactions</text>
+  </g>
+
+  <!-- Screenshot 9 -->
+  <g transform="translate(5100, 3520)">
+    <rect class="frame-bg" width="2200" height="1600" rx="8"/>
+    <rect class="frame-stroke" width="2200" height="1600" rx="8"/>
+    <text x="100" y="100" class="number" font-size="72">9</text>
+    <text x="1100" y="750" class="label" font-size="44" text-anchor="middle">Re-import Safety</text>
+    <text x="1100" y="820" class="sublabel" font-size="28" text-anchor="middle">onClick handlers preserved</text>
+    <text x="1100" y="870" class="sublabel" font-size="22" text-anchor="middle">after re-importing updated design</text>
+  </g>
+
+</svg>

@@ -1,0 +1,33 @@
+{
+    "name": "com.figmaimporter.unity",
+    "version": "1.0.0",
+    "displayName": "Figma Importer",
+    "description": "Import Figma designs directly into Unity as UGUI prefabs. Supports components, variants, auto-layout, constraints, text styling, and prototype navigation.",
+    "unity": "2021.3",
+    "unityRelease": "0f1",
+    "documentationUrl": "https://github.com/yourusername/figma-to-unity",
+    "changelogUrl": "https://github.com/yourusername/figma-to-unity/blob/main/CHANGELOG.md",
+    "licensesUrl": "https://github.com/yourusername/figma-to-unity/blob/main/LICENSE.md",
+    "keywords": [
+        "figma",
+        "ui",
+        "ugui",
+        "import",
+        "design"
+    ],
+    "author": {
+        "name": "Your Name",
+        "email": "your@email.com",
+        "url": "https://yourwebsite.com"
+    },
+    "dependencies": {
+        "com.unity.textmeshpro": "3.0.0"
+    },
+    "samples": [
+        {
+            "displayName": "Basic Sample",
+            "description": "A simple example showing how to import a Figma design",
+            "path": "Samples~/Basic"
+        }
+    ]
+}
