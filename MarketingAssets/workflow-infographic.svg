@@ -1,0 +1,453 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="figmaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff7262"/>
+      <stop offset="50%" style="stop-color:#a259ff"/>
+      <stop offset="100%" style="stop-color:#1abcfe"/>
+    </linearGradient>
+    <linearGradient id="unityGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#000000"/>
+      <stop offset="100%" style="stop-color:#2d2d2d"/>
+    </linearGradient>
+    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a259ff"/>
+      <stop offset="100%" style="stop-color:#00d4aa"/>
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a4a"/>
+      <stop offset="100%" style="stop-color:#1e1e3a"/>
+    </linearGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bgGradient)"/>
+
+  <!-- Subtle grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.03"/>
+  </pattern>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="960" y="70" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#ffffff">
+    Design in Figma, Run in Unity
+  </text>
+  <text x="960" y="110" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#888899">
+    Wire up your app with naming conventions and prototype interactions
+  </text>
+
+  <!-- ==================== FIGMA SIDE ==================== -->
+
+  <!-- Figma Panel -->
+  <g transform="translate(60, 150)">
+    <!-- Panel Background -->
+    <rect width="540" height="500" rx="16" fill="url(#cardGradient)" filter="url(#dropShadow)"/>
+
+    <!-- Figma Header -->
+    <rect width="540" height="50" rx="16" fill="#2d2d4a"/>
+    <rect y="35" width="540" height="15" fill="#2d2d4a"/>
+
+    <!-- Figma Logo -->
+    <g transform="translate(20, 12)">
+      <circle cx="8" cy="8" r="6" fill="#ff7262"/>
+      <circle cx="20" cy="8" r="6" fill="#a259ff"/>
+      <circle cx="8" cy="20" r="6" fill="#1abcfe"/>
+      <circle cx="20" cy="20" r="6" fill="#0acf83"/>
+    </g>
+    <text x="50" y="32" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Figma</text>
+
+    <!-- Layers Panel -->
+    <g transform="translate(20, 70)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">LAYERS</text>
+
+      <!-- Layer Items -->
+      <g transform="translate(0, 20)">
+        <!-- Frame -->
+        <rect x="0" y="0" width="200" height="28" rx="4" fill="#3a3a5a"/>
+        <text x="12" y="19" font-family="monospace" font-size="13" fill="#ffffff">HomeScreen</text>
+
+        <!-- BTN Layer -->
+        <rect x="16" y="36" width="184" height="28" rx="4" fill="transparent" stroke="#a259ff" stroke-width="1"/>
+        <text x="28" y="55" font-family="monospace" font-size="13" fill="#a259ff">BTN_PlayGame</text>
+
+        <!-- IMG Layer -->
+        <rect x="16" y="72" width="184" height="28" rx="4" fill="transparent" stroke="#1abcfe" stroke-width="1"/>
+        <text x="28" y="91" font-family="monospace" font-size="13" fill="#1abcfe">IMG_Logo</text>
+
+        <!-- CTN Layer -->
+        <rect x="16" y="108" width="184" height="28" rx="4" fill="transparent" stroke="#0acf83" stroke-width="1"/>
+        <text x="28" y="127" font-family="monospace" font-size="13" fill="#0acf83">CTN_MenuList</text>
+
+        <!-- TEXT Layer -->
+        <rect x="32" y="144" width="168" height="28" rx="4" fill="transparent" stroke="#ffbe0b" stroke-width="1"/>
+        <text x="44" y="163" font-family="monospace" font-size="13" fill="#ffbe0b">TEXT_Title</text>
+
+        <!-- 9SLICE Layer -->
+        <rect x="16" y="180" width="184" height="28" rx="4" fill="transparent" stroke="#ff7262" stroke-width="1"/>
+        <text x="28" y="199" font-family="monospace" font-size="13" fill="#ff7262">9SLICE_Panel</text>
+      </g>
+    </g>
+
+    <!-- Prototype Panel -->
+    <g transform="translate(260, 70)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">PROTOTYPE</text>
+
+      <!-- Interaction -->
+      <g transform="translate(0, 25)">
+        <rect width="240" height="80" rx="8" fill="#3a3a5a"/>
+        <text x="15" y="25" font-family="system-ui, sans-serif" font-size="12" fill="#888899">On tap</text>
+        <text x="15" y="48" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Navigate to</text>
+        <rect x="15" y="55" width="120" height="20" rx="4" fill="#a259ff"/>
+        <text x="25" y="69" font-family="monospace" font-size="11" fill="#ffffff">GameScreen</text>
+      </g>
+
+      <!-- Animation hint -->
+      <g transform="translate(0, 115)">
+        <rect width="240" height="55" rx="8" fill="#3a3a5a"/>
+        <text x="15" y="22" font-family="system-ui, sans-serif" font-size="12" fill="#888899">Smart animate</text>
+        <text x="15" y="42" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Push transition</text>
+      </g>
+    </g>
+
+    <!-- Component indicator -->
+    <g transform="translate(260, 260)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">COMPONENTS</text>
+
+      <g transform="translate(0, 20)">
+        <rect width="240" height="100" rx="8" fill="#3a3a5a"/>
+        <!-- Component icon -->
+        <g transform="translate(15, 15)">
+          <rect width="20" height="20" rx="2" fill="none" stroke="#a259ff" stroke-width="2"/>
+          <rect x="5" y="5" width="10" height="10" fill="#a259ff"/>
+        </g>
+        <text x="45" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Button</text>
+
+        <!-- Variants -->
+        <text x="15" y="55" font-family="system-ui, sans-serif" font-size="11" fill="#888899">Variants:</text>
+        <rect x="15" y="62" width="60" height="18" rx="3" fill="#4a4a6a"/>
+        <text x="25" y="75" font-family="monospace" font-size="10" fill="#ffffff">Default</text>
+        <rect x="80" y="62" width="50" height="18" rx="3" fill="#4a4a6a"/>
+        <text x="90" y="75" font-family="monospace" font-size="10" fill="#ffffff">Hover</text>
+        <rect x="135" y="62" width="55" height="18" rx="3" fill="#4a4a6a"/>
+        <text x="143" y="75" font-family="monospace" font-size="10" fill="#ffffff">Pressed</text>
+      </g>
+    </g>
+
+    <!-- Label -->
+    <text x="270" y="480" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#a259ff">Design + Prototype</text>
+  </g>
+
+  <!-- ==================== ARROW SECTION ==================== -->
+
+  <g transform="translate(640, 350)">
+    <!-- Export Arrow -->
+    <path d="M 0 50 L 180 50" stroke="url(#arrowGradient)" stroke-width="4" stroke-dasharray="12 6"/>
+    <polygon points="180,50 160,38 160,62" fill="#00d4aa"/>
+
+    <!-- ZIP icon -->
+    <g transform="translate(60, 10)">
+      <rect width="60" height="70" rx="4" fill="#2a2a4a" stroke="#00d4aa" stroke-width="2"/>
+      <rect x="15" y="0" width="30" height="12" fill="#00d4aa"/>
+      <text x="30" y="45" text-anchor="middle" font-family="monospace" font-size="11" fill="#00d4aa">.zip</text>
+      <text x="30" y="58" text-anchor="middle" font-family="monospace" font-size="8" fill="#666677">JSON+PNG</text>
+    </g>
+
+    <text x="90" y="105" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#00d4aa">Export</text>
+  </g>
+
+  <g transform="translate(860, 350)">
+    <!-- Import Arrow -->
+    <path d="M 0 50 L 180 50" stroke="url(#arrowGradient)" stroke-width="4" stroke-dasharray="12 6"/>
+    <polygon points="180,50 160,38 160,62" fill="#00d4aa"/>
+
+    <!-- Unity importer icon -->
+    <g transform="translate(60, 10)">
+      <rect width="60" height="70" rx="4" fill="#2a2a4a" stroke="#ffffff" stroke-width="2"/>
+      <text x="30" y="35" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" fill="#ffffff">U</text>
+      <text x="30" y="52" text-anchor="middle" font-family="monospace" font-size="8" fill="#888899">Importer</text>
+    </g>
+
+    <text x="90" y="105" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#00d4aa">Import</text>
+  </g>
+
+  <!-- ==================== UNITY SIDE ==================== -->
+
+  <g transform="translate(1100, 150)">
+    <!-- Panel Background -->
+    <rect width="760" height="500" rx="16" fill="url(#cardGradient)" filter="url(#dropShadow)"/>
+
+    <!-- Unity Header -->
+    <rect width="760" height="50" rx="16" fill="#2d2d4a"/>
+    <rect y="35" width="760" height="15" fill="#2d2d4a"/>
+
+    <!-- Unity Logo -->
+    <g transform="translate(20, 15)">
+      <polygon points="12,0 24,20 0,20" fill="#ffffff"/>
+    </g>
+    <text x="50" y="32" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Unity</text>
+
+    <!-- Hierarchy Panel -->
+    <g transform="translate(20, 70)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">HIERARCHY</text>
+
+      <g transform="translate(0, 20)">
+        <!-- Canvas -->
+        <rect x="0" y="0" width="200" height="24" rx="3" fill="#3a3a5a"/>
+        <text x="10" y="16" font-family="monospace" font-size="12" fill="#ffffff">Canvas</text>
+
+        <!-- HomeScreen -->
+        <rect x="12" y="30" width="188" height="24" rx="3" fill="#3a3a5a"/>
+        <text x="24" y="46" font-family="monospace" font-size="12" fill="#ffffff">HomeScreen</text>
+
+        <!-- BTN with Button icon -->
+        <rect x="24" y="60" width="176" height="24" rx="3" fill="transparent" stroke="#a259ff" stroke-width="1"/>
+        <rect x="30" y="66" width="12" height="12" rx="2" fill="#a259ff"/>
+        <text x="48" y="76" font-family="monospace" font-size="12" fill="#a259ff">BTN_PlayGame</text>
+
+        <!-- IMG -->
+        <rect x="24" y="90" width="176" height="24" rx="3" fill="transparent" stroke="#1abcfe" stroke-width="1"/>
+        <text x="36" y="106" font-family="monospace" font-size="12" fill="#1abcfe">IMG_Logo</text>
+
+        <!-- CTN -->
+        <rect x="24" y="120" width="176" height="24" rx="3" fill="transparent" stroke="#0acf83" stroke-width="1"/>
+        <text x="36" y="136" font-family="monospace" font-size="12" fill="#0acf83">CTN_MenuList</text>
+
+        <!-- TEXT with TMP icon -->
+        <rect x="36" y="150" width="164" height="24" rx="3" fill="transparent" stroke="#ffbe0b" stroke-width="1"/>
+        <text x="48" y="166" font-family="monospace" font-size="12" fill="#ffbe0b">TEXT_Title (TMP)</text>
+
+        <!-- 9SLICE -->
+        <rect x="24" y="180" width="176" height="24" rx="3" fill="transparent" stroke="#ff7262" stroke-width="1"/>
+        <text x="36" y="196" font-family="monospace" font-size="12" fill="#ff7262">9SLICE_Panel</text>
+      </g>
+    </g>
+
+    <!-- Inspector Panel -->
+    <g transform="translate(250, 70)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">INSPECTOR - BTN_PlayGame</text>
+
+      <g transform="translate(0, 20)">
+        <!-- Button Component -->
+        <rect width="240" height="90" rx="6" fill="#3a3a5a"/>
+        <rect width="240" height="24" rx="6" fill="#4a4a6a"/>
+        <rect y="18" width="240" height="6" fill="#4a4a6a"/>
+        <text x="12" y="17" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Button</text>
+
+        <text x="12" y="45" font-family="system-ui, sans-serif" font-size="11" fill="#888899">On Click ()</text>
+        <rect x="12" y="52" width="216" height="28" rx="4" fill="#2a2a4a"/>
+        <text x="20" y="70" font-family="monospace" font-size="10" fill="#00d4aa">UIScreenManager.Show("GameScreen")</text>
+      </g>
+
+      <!-- Navigation Component -->
+      <g transform="translate(0, 120)">
+        <rect width="240" height="70" rx="6" fill="#3a3a5a"/>
+        <rect width="240" height="24" rx="6" fill="#4a4a6a"/>
+        <rect y="18" width="240" height="6" fill="#4a4a6a"/>
+        <text x="12" y="17" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">FigmaNavigationButton</text>
+
+        <text x="12" y="45" font-family="system-ui, sans-serif" font-size="11" fill="#888899">Target Screen</text>
+        <text x="100" y="45" font-family="monospace" font-size="11" fill="#ffffff">GameScreen</text>
+        <text x="12" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#888899">Action</text>
+        <text x="100" y="62" font-family="monospace" font-size="11" fill="#ffffff">Navigate</text>
+      </g>
+
+      <!-- Entry Animation Component -->
+      <g transform="translate(0, 200)">
+        <rect width="240" height="70" rx="6" fill="#3a3a5a"/>
+        <rect width="240" height="24" rx="6" fill="#4a4a6a"/>
+        <rect y="18" width="240" height="6" fill="#4a4a6a"/>
+        <text x="12" y="17" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">FigmaEntryAnimation</text>
+
+        <text x="12" y="45" font-family="system-ui, sans-serif" font-size="11" fill="#888899">Type</text>
+        <text x="100" y="45" font-family="monospace" font-size="11" fill="#a259ff">PopIn</text>
+        <text x="12" y="62" font-family="system-ui, sans-serif" font-size="11" fill="#888899">Duration</text>
+        <text x="100" y="62" font-family="monospace" font-size="11" fill="#ffffff">0.4s</text>
+      </g>
+    </g>
+
+    <!-- Game View Preview -->
+    <g transform="translate(520, 70)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#888899" letter-spacing="1">GAME VIEW</text>
+
+      <g transform="translate(0, 20)">
+        <rect width="220" height="320" rx="8" fill="#1a1a2e" stroke="#3a3a5a" stroke-width="2"/>
+
+        <!-- Mock UI -->
+        <rect x="30" y="30" width="160" height="50" rx="4" fill="#2a2a4a"/>
+        <text x="110" y="60" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#ffffff">LOGO</text>
+
+        <text x="110" y="110" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#ffffff">Welcome!</text>
+
+        <!-- Button -->
+        <rect x="40" y="140" width="140" height="45" rx="8" fill="#a259ff"/>
+        <text x="110" y="168" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Play Game</text>
+
+        <!-- Menu items -->
+        <rect x="40" y="200" width="140" height="30" rx="4" fill="#3a3a5a"/>
+        <text x="110" y="220" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#ffffff">Settings</text>
+
+        <rect x="40" y="240" width="140" height="30" rx="4" fill="#3a3a5a"/>
+        <text x="110" y="260" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#ffffff">Credits</text>
+
+        <!-- Play indicator -->
+        <polygon points="200,300 185,290 185,310" fill="#0acf83"/>
+      </g>
+
+      <text x="110" y="360" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#0acf83">Running!</text>
+    </g>
+
+    <!-- Label -->
+    <text x="380" y="480" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#00d4aa">Auto-Generated UGUI Prefab</text>
+  </g>
+
+  <!-- ==================== LEGEND ==================== -->
+
+  <g transform="translate(60, 680)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Layer Naming Conventions</text>
+
+    <!-- Legend items -->
+    <g transform="translate(0, 30)">
+      <!-- BTN -->
+      <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+      <rect x="10" y="10" width="50" height="20" rx="3" fill="#a259ff"/>
+      <text x="20" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#ffffff">BTN_</text>
+      <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Button + PopIn</text>
+
+      <!-- IMG -->
+      <g transform="translate(160, 0)">
+        <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="10" y="10" width="50" height="20" rx="3" fill="#1abcfe"/>
+        <text x="20" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#ffffff">IMG_</text>
+        <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Image + FadeIn</text>
+      </g>
+
+      <!-- CTN -->
+      <g transform="translate(320, 0)">
+        <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="10" y="10" width="50" height="20" rx="3" fill="#0acf83"/>
+        <text x="20" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#ffffff">CTN_</text>
+        <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Container</text>
+      </g>
+
+      <!-- TEXT -->
+      <g transform="translate(480, 0)">
+        <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="10" y="10" width="55" height="20" rx="3" fill="#ffbe0b"/>
+        <text x="17" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#1a1a2e">TEXT</text>
+        <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">TextMeshPro</text>
+      </g>
+
+      <!-- 9SLICE -->
+      <g transform="translate(640, 0)">
+        <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="10" y="10" width="70" height="20" rx="3" fill="#ff7262"/>
+        <text x="15" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#ffffff">9SLICE_</text>
+        <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">9-Slice Sprite</text>
+      </g>
+
+      <!-- ICON -->
+      <g transform="translate(800, 0)">
+        <rect width="140" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="10" y="10" width="55" height="20" rx="3" fill="#1abcfe"/>
+        <text x="17" y="25" font-family="monospace" font-size="11" font-weight="600" fill="#ffffff">ICON_</text>
+        <text x="10" y="42" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Icon + FadeIn</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Auto-wiring section -->
+  <g transform="translate(1000, 680)">
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Auto-Wired Features</text>
+
+    <g transform="translate(0, 30)">
+      <!-- Prototype nav -->
+      <g transform="translate(0, 0)">
+        <rect width="280" height="50" rx="8" fill="#2a2a4a"/>
+        <circle cx="25" cy="25" r="12" fill="#a259ff"/>
+        <text x="22" y="29" font-family="system-ui, sans-serif" font-size="12" fill="#ffffff">P</text>
+        <text x="50" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Prototype Interactions</text>
+        <text x="50" y="38" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Navigate to → UIScreenManager.Show()</text>
+      </g>
+
+      <!-- Variants -->
+      <g transform="translate(300, 0)">
+        <rect width="280" height="50" rx="8" fill="#2a2a4a"/>
+        <rect x="13" y="13" width="24" height="24" rx="3" fill="none" stroke="#0acf83" stroke-width="2"/>
+        <rect x="18" y="18" width="14" height="14" fill="#0acf83"/>
+        <text x="50" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Component Variants</text>
+        <text x="50" y="38" font-family="system-ui, sans-serif" font-size="10" fill="#888899">States → FigmaVariantController</text>
+      </g>
+
+      <!-- Auto-layout -->
+      <g transform="translate(600, 0)">
+        <rect width="280" height="50" rx="8" fill="#2a2a4a"/>
+        <g transform="translate(13, 13)">
+          <rect width="10" height="24" fill="#1abcfe"/>
+          <rect x="14" y="4" width="10" height="16" fill="#1abcfe"/>
+        </g>
+        <text x="50" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Auto Layout</text>
+        <text x="50" y="38" font-family="system-ui, sans-serif" font-size="10" fill="#888899">Row/Column → LayoutGroups</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Workflow steps at bottom -->
+  <g transform="translate(60, 800)">
+    <g transform="translate(0, 0)">
+      <circle cx="20" cy="20" r="20" fill="#a259ff"/>
+      <text x="20" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">1</text>
+      <text x="50" y="18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Name your layers</text>
+      <text x="50" y="35" font-family="system-ui, sans-serif" font-size="12" fill="#888899">Use BTN_, IMG_, CTN_, TEXT prefixes</text>
+    </g>
+
+    <g transform="translate(350, 0)">
+      <circle cx="20" cy="20" r="20" fill="#a259ff"/>
+      <text x="20" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">2</text>
+      <text x="50" y="18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Wire prototype interactions</text>
+      <text x="50" y="35" font-family="system-ui, sans-serif" font-size="12" fill="#888899">On tap → Navigate to screen</text>
+    </g>
+
+    <g transform="translate(720, 0)">
+      <circle cx="20" cy="20" r="20" fill="#a259ff"/>
+      <text x="20" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">3</text>
+      <text x="50" y="18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Export with plugin</text>
+      <text x="50" y="35" font-family="system-ui, sans-serif" font-size="12" fill="#888899">Download ZIP with JSON + images</text>
+    </g>
+
+    <g transform="translate(1070, 0)">
+      <circle cx="20" cy="20" r="20" fill="#a259ff"/>
+      <text x="20" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">4</text>
+      <text x="50" y="18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Import in Unity</text>
+      <text x="50" y="35" font-family="system-ui, sans-serif" font-size="12" fill="#888899">Tools → Figma → Import to Unity</text>
+    </g>
+
+    <g transform="translate(1420, 0)">
+      <circle cx="20" cy="20" r="20" fill="#0acf83"/>
+      <text x="20" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">5</text>
+      <text x="50" y="18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff">Play!</text>
+      <text x="50" y="35" font-family="system-ui, sans-serif" font-size="12" fill="#888899">Navigation works automatically</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="960" y="1050" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#666677">
+    Figma Importer for Unity — github.com/yourusername/FigmaToUnity
+  </text>
+</svg>

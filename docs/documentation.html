@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma Importer for Unity - Documentation</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --figma: #ff7262;
+            --unity: #00d4aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--figma), var(--unity));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-header .version {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .nav-section {
+            padding: 0.5rem 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .nav-link {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.375rem 0;
+            font-size: 0.9375rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 3rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: var(--bg-code);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+            font-size: 0.875em;
+            color: var(--figma);
+        }
+
+        pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .comment { color: #6a737d; }
+        .keyword { color: #ff7b72; }
+        .string { color: #a5d6ff; }
+        .function { color: #d2a8ff; }
+        .type { color: #79c0ff; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-card);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .callout {
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout.warning {
+            border-color: var(--warning);
+        }
+
+        .callout.success {
+            border-color: var(--success);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .architecture-diagram {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .main {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>Figma Importer for Unity</h1>
+                <div class="version">Version 1.0.0</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Getting Started</div>
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#requirements" class="nav-link">Requirements</a>
+                <a href="#installation" class="nav-link">Installation</a>
+                <a href="#quick-start" class="nav-link">Quick Start</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Figma Plugin</div>
+                <a href="#figma-setup" class="nav-link">Setup</a>
+                <a href="#layer-naming" class="nav-link">Layer Naming</a>
+                <a href="#exporting" class="nav-link">Exporting</a>
+                <a href="#variants" class="nav-link">Variants</a>
+                <a href="#prototyping" class="nav-link">Prototyping</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Unity Importer</div>
+                <a href="#importing" class="nav-link">Importing</a>
+                <a href="#import-settings" class="nav-link">Import Settings</a>
+                <a href="#reimporting" class="nav-link">Re-importing</a>
+                <a href="#auto-reimport" class="nav-link">Auto Re-import</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Runtime</div>
+                <a href="#navigation" class="nav-link">Screen Navigation</a>
+                <a href="#transitions" class="nav-link">Transitions</a>
+                <a href="#animations" class="nav-link">Entry Animations</a>
+                <a href="#variant-controller" class="nav-link">Variant Controller</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Reference</div>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#api-reference" class="nav-link">API Reference</a>
+                <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+            </div>
+        </nav>
+
+        <main class="main">
+            <!-- Overview -->
+            <section id="overview" class="section">
+                <h2>Overview</h2>
+                <p>Figma Importer for Unity is a two-part system that bridges design-to-development by automating the conversion of Figma UI designs into production-ready Unity UGUI prefabs.</p>
+
+                <p>The system consists of:</p>
+                <ul>
+                    <li><strong>Figma Plugin</strong> - Exports frames as structured JSON with PNG images</li>
+                    <li><strong>Unity Package</strong> - Imports JSON and generates UGUI prefabs with full functionality</li>
+                </ul>
+
+                <h3 id="data-flow">Data Flow</h3>
+                <ol>
+                    <li><strong>Designer in Figma</strong> runs the plugin and exports a ZIP file (JSON + PNGs)</li>
+                    <li><strong>Developer in Unity</strong> opens <code>Tools > Figma > Import to Unity...</code></li>
+                    <li><strong>FigmaNodeBuilder</strong> generates UGUI prefabs in <code>Resources/Screens/</code></li>
+                    <li><strong>Runtime</strong> uses <code>UIScreenManager.Show("ScreenName")</code> for navigation</li>
+                </ol>
+            </section>
+
+            <!-- Requirements -->
+            <section id="requirements" class="section">
+                <h2>Requirements</h2>
+                <h4>Unity</h4>
+                <ul>
+                    <li>Unity 2021.3 or later</li>
+                    <li>TextMeshPro (included with Unity)</li>
+                </ul>
+
+                <h4>Figma Plugin Development</h4>
+                <ul>
+                    <li>Node.js and npm</li>
+                    <li>Figma Desktop App</li>
+                </ul>
+            </section>
+
+            <!-- Installation -->
+            <section id="installation" class="section">
+                <h2>Installation</h2>
+
+                <h3>Unity Package</h3>
+                <p>Copy the <code>Assets/FigmaImporter</code> folder into your Unity project's Assets folder. The package will be automatically recognized.</p>
+
+                <h3>Figma Plugin</h3>
+                <ol>
+                    <li>Navigate to the <code>FigmaPlugin</code> folder</li>
+                    <li>Install dependencies and build:
+<pre><code>cd FigmaPlugin
+npm install
+npm run build</code></pre>
+                    </li>
+                    <li>In Figma Desktop, go to <strong>Plugins > Development > Import plugin from manifest</strong></li>
+                    <li>Select the <code>FigmaPlugin/manifest.json</code> file</li>
+                </ol>
+            </section>
+
+            <!-- Quick Start -->
+            <section id="quick-start" class="section">
+                <h2>Quick Start</h2>
+
+                <h4>1. Design in Figma</h4>
+                <p>Create your UI design using frames. Name layers with prefixes to control import behavior:</p>
+                <ul>
+                    <li><code>BTN_Submit</code> - Creates a button</li>
+                    <li><code>IMG_Background</code> - Creates an image</li>
+                    <li><code>CTN_Header</code> - Creates a container that processes children</li>
+                </ul>
+
+                <h4>2. Export from Figma</h4>
+                <ol>
+                    <li>Select a frame</li>
+                    <li>Run <strong>Plugins > Figma Importer for Unity</strong></li>
+                    <li>Choose export scale and click <strong>Export Selected Frame</strong></li>
+                    <li>Download the ZIP file</li>
+                </ol>
+
+                <h4>3. Import to Unity</h4>
+                <ol>
+                    <li>Extract the ZIP into your Unity project's Assets folder</li>
+                    <li>Open <strong>Tools > Figma > Import to Unity...</strong></li>
+                    <li>Select the <code>*_Screen.json</code> file</li>
+                    <li>Click <strong>Import</strong></li>
+                </ol>
+
+                <h4>4. Use at Runtime</h4>
+<pre><code><span class="comment">// Navigate to a screen</span>
+<span class="type">UIScreenManager</span>.<span class="function">Show</span>(<span class="string">"HomeScreen"</span>);
+
+<span class="comment">// Go back in history</span>
+<span class="type">UIScreenManager</span>.<span class="function">Back</span>();
+
+<span class="comment">// Instant navigation (no transition)</span>
+<span class="type">UIScreenManager</span>.<span class="function">ShowImmediate</span>(<span class="string">"Settings"</span>);</code></pre>
+            </section>
+
+            <!-- Layer Naming -->
+            <section id="layer-naming" class="section">
+                <h2>Layer Naming Conventions</h2>
+                <p>Use these prefixes in Figma layer names to control how elements are imported:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prefix</th>
+                            <th>Behavior</th>
+                            <th>Unity Components</th>
+                            <th>Entry Animation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>BTN_</code></td>
+                            <td>Button - Baked as composite image</td>
+                            <td>Image, Button</td>
+                            <td>PopIn</td>
+                        </tr>
+                        <tr>
+                            <td><code>IMG_</code></td>
+                            <td>Image - Baked as PNG sprite</td>
+                            <td>Image</td>
+                            <td>FadeIn</td>
+                        </tr>
+                        <tr>
+                            <td><code>ICON_</code></td>
+                            <td>Icon - Baked as PNG sprite</td>
+                            <td>Image</td>
+                            <td>FadeIn</td>
+                        </tr>
+                        <tr>
+                            <td><code>CTN_</code></td>
+                            <td>Container - No image, processes children recursively</td>
+                            <td>RectTransform, LayoutGroup (if auto-layout)</td>
+                            <td>FadeSlideUp</td>
+                        </tr>
+                        <tr>
+                            <td><code>9SLICE_</code></td>
+                            <td>9-Slice - Scalable background with borders</td>
+                            <td>Image (Sliced)</td>
+                            <td>None</td>
+                        </tr>
+                        <tr>
+                            <td><code>TEXT</code></td>
+                            <td>Text - Native TextMeshPro (not layer name)</td>
+                            <td>TextMeshProUGUI</td>
+                            <td>None</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout">
+                    <div class="callout-title">Unprefixed Layers</div>
+                    <p>Root children without prefixes are automatically baked as composite images for convenience.</p>
+                </div>
+            </section>
+
+            <!-- Exporting -->
+            <section id="exporting" class="section">
+                <h2>Exporting from Figma</h2>
+
+                <h3>Export Modes</h3>
+                <ul>
+                    <li><strong>Export Selected Frame</strong> - Exports the currently selected frame</li>
+                    <li><strong>Export All Frames</strong> - Exports all frames in the page or section to one ZIP</li>
+                </ul>
+
+                <h3>Image Scale</h3>
+                <p>Choose from 1x, 2x, 3x, or 4x resolution. This affects PNG quality only, not layout dimensions.</p>
+
+                <h3>Export Contents</h3>
+                <p>Each export creates:</p>
+                <ul>
+                    <li><code>{FrameName}_Screen.json</code> - Layout data, hierarchy, constraints, text, interactions</li>
+                    <li><code>{FrameName}_Images/</code> - PNG images organized by type</li>
+                </ul>
+            </section>
+
+            <!-- Variants -->
+            <section id="variants" class="section">
+                <h2>Component Variants</h2>
+                <p>Figma component variants are fully supported for creating stateful UI elements like buttons.</p>
+
+                <h3>Creating Button States</h3>
+                <ol>
+                    <li>Create a component set in Figma</li>
+                    <li>Add a "State" property with values: Default, Hover, Pressed, Disabled</li>
+                    <li>Design each state variant</li>
+                    <li>Export and import as normal</li>
+                </ol>
+
+                <div class="callout success">
+                    <div class="callout-title">Auto-Wiring</div>
+                    <p>When the importer detects Default/Hover/Pressed/Disabled state variants, it automatically adds <code>FigmaButtonStateWirer</code> to handle pointer events and state switching.</p>
+                </div>
+
+                <h3>Runtime State Control</h3>
+<pre><code><span class="comment">// Get the variant controller</span>
+<span class="keyword">var</span> controller = GetComponent&lt;<span class="type">FigmaVariantController</span>&gt;();
+
+<span class="comment">// Set state (exact match)</span>
+controller.<span class="function">SetState</span>(<span class="string">"State=Hover"</span>);
+
+<span class="comment">// Set state (partial match)</span>
+controller.<span class="function">SetState</span>(<span class="string">"Hover"</span>);
+
+<span class="comment">// Get available states</span>
+<span class="keyword">var</span> states = controller.<span class="function">GetAvailableStates</span>();</code></pre>
+            </section>
+
+            <!-- Prototyping -->
+            <section id="prototyping" class="section">
+                <h2>Prototype Interactions</h2>
+                <p>Connect screens in Figma's prototype mode and navigation is automatically wired in Unity.</p>
+
+                <h3>Supported Interactions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Figma Action</th>
+                            <th>Unity Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Navigate to frame</td>
+                            <td><code>UIScreenManager.Show("FrameName")</code></td>
+                        </tr>
+                        <tr>
+                            <td>Back</td>
+                            <td><code>UIScreenManager.Back()</code></td>
+                        </tr>
+                        <tr>
+                            <td>Open URL</td>
+                            <td><code>Application.OpenURL(url)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>The <code>FigmaNavigationButton</code> component is automatically added to elements with prototype interactions.</p>
+            </section>
+
+            <!-- Importing -->
+            <section id="importing" class="section">
+                <h2>Importing to Unity</h2>
+
+                <h3>Import Window</h3>
+                <p>Open <strong>Tools > Figma > Import to Unity...</strong> to access the importer.</p>
+
+                <h4>JSON File Mode</h4>
+                <ol>
+                    <li>Click <strong>Browse</strong> to select the <code>*_Screen.json</code> file</li>
+                    <li>Configure import settings</li>
+                    <li>Click <strong>Import</strong></li>
+                </ol>
+
+                <h3>Generated Output</h3>
+                <ul>
+                    <li><code>Resources/Screens/{FrameName}.prefab</code> - Main screen prefab</li>
+                    <li><code>{ExportFolder}/Prefabs/</code> - Component prefabs</li>
+                    <li>Imported sprites in the export folder</li>
+                </ul>
+            </section>
+
+            <!-- Import Settings -->
+            <section id="import-settings" class="section">
+                <h2>Import Settings</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pixels Per Unit</td>
+                            <td>Sprite scale factor (affects sprite sizing)</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Remove Orphans</td>
+                            <td>Delete nodes that were removed in Figma</td>
+                            <td>On</td>
+                        </tr>
+                        <tr>
+                            <td>Create Canvas</td>
+                            <td>Auto-create Canvas if missing</td>
+                            <td>On</td>
+                        </tr>
+                        <tr>
+                            <td>Create EventSystem</td>
+                            <td>Auto-create EventSystem if missing</td>
+                            <td>On</td>
+                        </tr>
+                        <tr>
+                            <td>Setup UIScreenManager</td>
+                            <td>Auto-create navigation manager</td>
+                            <td>On</td>
+                        </tr>
+                        <tr>
+                            <td>Add Entry Animations</td>
+                            <td>Add FigmaEntryAnimation components</td>
+                            <td>On</td>
+                        </tr>
+                        <tr>
+                            <td>Stagger Delay</td>
+                            <td>Delay between sibling animations</td>
+                            <td>0.05s</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Optional Prefabs</h3>
+                <ul>
+                    <li><strong>3D Environment Prefab</strong> - Creates <code>Resources/Environments/{FrameName}_Environment.prefab</code></li>
+                    <li><strong>Screen Transition</strong> - Creates <code>Resources/Transitions/{FrameName}_Transition.prefab</code></li>
+                    <li><strong>Video Plane</strong> - Creates video playback quad with RenderTexture</li>
+                </ul>
+            </section>
+
+            <!-- Re-importing -->
+            <section id="reimporting" class="section">
+                <h2>Re-importing</h2>
+                <p>When you re-import an updated design, the system intelligently preserves your customizations.</p>
+
+                <h3>What's Preserved</h3>
+                <ul>
+                    <li>onClick event handlers</li>
+                    <li>Manually added MonoBehaviours</li>
+                    <li>Custom component references</li>
+                    <li>Inspector modifications to runtime components</li>
+                </ul>
+
+                <h3>What's Updated</h3>
+                <ul>
+                    <li>Positions and sizes</li>
+                    <li>Layout group settings</li>
+                    <li>Images and sprites</li>
+                    <li>Text content and styling</li>
+                    <li>New nodes added in Figma</li>
+                </ul>
+
+                <h3>Orphan Cleanup</h3>
+                <p>Nodes deleted in Figma are removed from Unity (when "Remove Orphans" is enabled). Each node is tracked by its unique Figma ID via the <code>FigmaNodeKey</code> component.</p>
+            </section>
+
+            <!-- Auto Re-import -->
+            <section id="auto-reimport" class="section">
+                <h2>Auto Re-import</h2>
+                <p>Enable file watching to automatically re-import when export files change.</p>
+
+                <h3>Setup</h3>
+                <ol>
+                    <li>In the Import Window, expand <strong>Auto-Reimport Settings</strong></li>
+                    <li>Click <strong>Add Folder</strong> and select your export directory</li>
+                    <li>The system watches for changes to <code>*_Screen.json</code> and <code>*_Images/*.png</code></li>
+                </ol>
+
+                <div class="callout">
+                    <div class="callout-title">Debouncing</div>
+                    <p>Changes are debounced with a 0.5 second delay to handle rapid file modifications.</p>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <section id="navigation" class="section">
+                <h2>Screen Navigation</h2>
+                <p>The <code>UIScreenManager</code> singleton handles all screen navigation at runtime.</p>
+
+                <h3>API Reference</h3>
+<pre><code><span class="comment">// Navigate to a screen with transition</span>
+<span class="type">UIScreenManager</span>.<span class="function">Show</span>(<span class="string">"HomeScreen"</span>);
+
+<span class="comment">// Navigate instantly (no transition)</span>
+<span class="type">UIScreenManager</span>.<span class="function">ShowImmediate</span>(<span class="string">"Settings"</span>);
+
+<span class="comment">// Go back in navigation history</span>
+<span class="type">UIScreenManager</span>.<span class="function">Back</span>();
+
+<span class="comment">// Get the current screen name</span>
+<span class="keyword">string</span> current = <span class="type">UIScreenManager</span>.CurrentScreen;
+
+<span class="comment">// Check if a transition is in progress</span>
+<span class="keyword">bool</span> transitioning = <span class="type">UIScreenManager</span>.IsTransitioning;</code></pre>
+
+                <h3>Events</h3>
+<pre><code><span class="comment">// Subscribe to navigation events</span>
+<span class="type">UIScreenManager</span>.OnTransitionStart += (from, to) => {
+    <span class="type">Debug</span>.<span class="function">Log</span>(<span class="string">$"Navigating from {from} to {to}"</span>);
+};
+
+<span class="type">UIScreenManager</span>.OnTransitionComplete += (screen) => {
+    <span class="type">Debug</span>.<span class="function">Log</span>(<span class="string">$"Now showing {screen}"</span>);
+};</code></pre>
+
+                <h3>Screen Loading</h3>
+                <p>Screens are loaded from <code>Resources/Screens/{name}</code>. The manager also auto-loads matching environment prefabs from <code>Resources/Environments/{name}_Environment</code>.</p>
+            </section>
+
+            <!-- Transitions -->
+            <section id="transitions" class="section">
+                <h2>Screen Transitions</h2>
+
+                <h3>FadeTransition</h3>
+                <p>Fades to a color (default black) and back when switching screens.</p>
+
+                <h4>Properties</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>outDuration</code></td>
+                            <td>Time to fade out current screen</td>
+                        </tr>
+                        <tr>
+                            <td><code>holdDuration</code></td>
+                            <td>Time to hold while fully covered</td>
+                        </tr>
+                        <tr>
+                            <td><code>inDuration</code></td>
+                            <td>Time to fade in new screen</td>
+                        </tr>
+                        <tr>
+                            <td><code>fadeColor</code></td>
+                            <td>Color to fade to</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>CameraTransition</h3>
+                <p>Applies camera effects during screen transitions.</p>
+
+                <h4>Effect Types</h4>
+                <ul>
+                    <li><strong>Shake</strong> - Perlin noise-based camera shake with configurable intensity</li>
+                    <li><strong>ZoomPulse</strong> - FOV change with smooth sine curve</li>
+                    <li><strong>DollyForward</strong> - Camera moves forward then back</li>
+                    <li><strong>Drift</strong> - Smooth camera drift with position offset</li>
+                </ul>
+            </section>
+
+            <!-- Animations -->
+            <section id="animations" class="section">
+                <h2>Entry Animations</h2>
+                <p>Entry animations play when screens are shown, creating polished UI transitions.</p>
+
+                <h3>Animation Types</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>FadeIn</td><td>Alpha animates from 0 to 1</td></tr>
+                        <tr><td>PopIn</td><td>Scale from 0 to 1 with spring overshoot</td></tr>
+                        <tr><td>SlideFromLeft</td><td>Slides in from the left</td></tr>
+                        <tr><td>SlideFromRight</td><td>Slides in from the right</td></tr>
+                        <tr><td>SlideFromTop</td><td>Slides in from the top</td></tr>
+                        <tr><td>SlideFromBottom</td><td>Slides in from the bottom</td></tr>
+                        <tr><td>FadeSlideUp</td><td>Fades in while sliding up</td></tr>
+                        <tr><td>FadeSlideDown</td><td>Fades in while sliding down</td></tr>
+                        <tr><td>FadeSlideLeft</td><td>Fades in while sliding left</td></tr>
+                        <tr><td>FadeSlideRight</td><td>Fades in while sliding right</td></tr>
+                        <tr><td>FadePopIn</td><td>Fades in with scale spring</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Configuration</h3>
+<pre><code><span class="keyword">var</span> anim = GetComponent&lt;<span class="type">FigmaEntryAnimation</span>&gt;();
+
+<span class="comment">// Configure animation</span>
+anim.animationType = <span class="type">EntryAnimationType</span>.PopIn;
+anim.duration = <span class="string">0.4f</span>;
+anim.delay = <span class="string">0.1f</span>;
+anim.popOvershoot = <span class="string">1.2f</span>;
+
+<span class="comment">// Manual playback</span>
+anim.<span class="function">PlayAnimation</span>();
+anim.<span class="function">ResetToOriginal</span>();</code></pre>
+
+                <h3>Staggered Animations</h3>
+                <p>Sibling elements animate with a stagger delay, creating a cascading effect. The delay is calculated as <code>siblingIndex * staggerDelay</code>.</p>
+            </section>
+
+            <!-- Variant Controller -->
+            <section id="variant-controller" class="section">
+                <h2>Variant Controller</h2>
+                <p>The <code>FigmaVariantController</code> manages state switching for components with variants.</p>
+
+<pre><code><span class="keyword">var</span> controller = GetComponent&lt;<span class="type">FigmaVariantController</span>&gt;();
+
+<span class="comment">// Set state with exact key</span>
+controller.<span class="function">SetState</span>(<span class="string">"State=Hover, Size=Large"</span>);
+
+<span class="comment">// Set state with partial match</span>
+controller.<span class="function">SetState</span>(<span class="string">"Hover"</span>); <span class="comment">// Matches "State=Hover"</span>
+
+<span class="comment">// Get current state</span>
+<span class="keyword">string</span> state = controller.<span class="function">GetCurrentState</span>();
+
+<span class="comment">// List available states</span>
+<span class="keyword">string</span>[] states = controller.<span class="function">GetAvailableStates</span>();</code></pre>
+            </section>
+
+            <!-- Architecture -->
+            <section id="architecture" class="section">
+                <h2>Architecture</h2>
+
+                <div class="architecture-diagram">
+FigmaToUnity/
+├── FigmaPlugin/              # Figma Plugin (TypeScript)
+│   ├── code.ts               # Main export logic
+│   ├── ui.html               # Plugin UI
+│   ├── manifest.json         # Plugin config
+│   └── package.json          # npm dependencies
+│
+└── Assets/FigmaImporter/     # Unity Package (C#)
+    ├── Editor/               # Import pipeline
+    │   ├── FigmaImporterWindow.cs    # Editor UI
+    │   ├── FigmaNodeBuilder.cs       # Core importer
+    │   ├── FigmaTypes.cs             # JSON DTOs
+    │   ├── FigmaApiClient.cs         # REST API (future)
+    │   └── FigmaAutoReimporter.cs    # File watching
+    │
+    └── Runtime/              # Gameplay components
+        ├── UIScreenManager.cs        # Navigation singleton
+        ├── FigmaVariantController.cs # State management
+        ├── FigmaEntryAnimation.cs    # Entry animations
+        ├── FigmaNavigationButton.cs  # Prototype wiring
+        ├── FigmaButtonStateWirer.cs  # Button states
+        ├── FigmaNodeKey.cs           # Node tracking
+        └── Transitions/              # Screen transitions
+                </div>
+
+                <h3>Export Format (v7)</h3>
+                <p>The JSON export bundle contains:</p>
+                <ul>
+                    <li><code>version</code> - Format version (currently 7)</li>
+                    <li><code>documentName</code>, <code>frameName</code>, <code>frameId</code> - Document metadata</li>
+                    <li><code>width</code>, <code>height</code> - Frame dimensions</li>
+                    <li><code>nodes</code> - Hierarchical node tree</li>
+                    <li><code>components</code> - Figma component definitions</li>
+                    <li><code>componentSets</code> - Variant set definitions</li>
+                </ul>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api-reference" class="section">
+                <h2>API Reference</h2>
+
+                <h3>UIScreenManager</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method / Property</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>Show(string name)</code></td><td>Navigate to screen with transition</td></tr>
+                        <tr><td><code>ShowImmediate(string name)</code></td><td>Navigate instantly without transition</td></tr>
+                        <tr><td><code>Back()</code></td><td>Navigate to previous screen in history</td></tr>
+                        <tr><td><code>CurrentScreen</code></td><td>Get current screen name</td></tr>
+                        <tr><td><code>IsTransitioning</code></td><td>Check if transition is in progress</td></tr>
+                        <tr><td><code>OnTransitionStart</code></td><td>Event fired when transition begins</td></tr>
+                        <tr><td><code>OnTransitionComplete</code></td><td>Event fired when transition ends</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>FigmaVariantController</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>SetState(string key)</code></td><td>Activate variant by state key</td></tr>
+                        <tr><td><code>GetCurrentState()</code></td><td>Get active state key</td></tr>
+                        <tr><td><code>GetAvailableStates()</code></td><td>Get all state keys</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>FigmaEntryAnimation</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method / Property</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>PlayAnimation()</code></td><td>Manually trigger animation</td></tr>
+                        <tr><td><code>ResetToOriginal()</code></td><td>Reset to pre-animation state</td></tr>
+                        <tr><td><code>animationType</code></td><td>Type of animation to play</td></tr>
+                        <tr><td><code>duration</code></td><td>Animation duration in seconds</td></tr>
+                        <tr><td><code>delay</code></td><td>Delay before animation starts</td></tr>
+                        <tr><td><code>playOnStart</code></td><td>Auto-play on Start()</td></tr>
+                        <tr><td><code>playOnEnable</code></td><td>Re-play when enabled</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="section">
+                <h2>Troubleshooting</h2>
+
+                <h4>Images not appearing</h4>
+                <ul>
+                    <li>Ensure the <code>*_Images</code> folder is in the same directory as the JSON file</li>
+                    <li>Check that image file names match references in the JSON</li>
+                    <li>Verify sprites are imported with correct settings (Texture Type: Sprite)</li>
+                </ul>
+
+                <h4>Text not rendering</h4>
+                <ul>
+                    <li>Ensure TextMeshPro is installed (Window > TextMeshPro > Import TMP Essential Resources)</li>
+                    <li>Check font assets are available in the project</li>
+                </ul>
+
+                <h4>Layout not matching Figma</h4>
+                <ul>
+                    <li>Verify constraints are set correctly in Figma (not just visual positioning)</li>
+                    <li>Check that auto-layout is enabled on the parent frame in Figma</li>
+                    <li>Ensure Pixels Per Unit matches your design scale</li>
+                </ul>
+
+                <h4>Navigation not working</h4>
+                <ul>
+                    <li>Verify UIScreenManager exists in the scene</li>
+                    <li>Check that screen prefabs are in <code>Resources/Screens/</code></li>
+                    <li>Ensure prototype interactions are set up in Figma before export</li>
+                </ul>
+
+                <h4>Re-import losing customizations</h4>
+                <ul>
+                    <li>Customizations on the prefab root may be overwritten</li>
+                    <li>Add custom scripts to child objects for better preservation</li>
+                    <li>Use prefab variants for extensive customizations</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

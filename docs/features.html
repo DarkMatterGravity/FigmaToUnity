@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma To Unity Pipeline - Features</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --figma: #ff7262;
+            --unity: #00d4aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .section-title .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .export-icon { background: linear-gradient(135deg, #ff7262, #f24e1e); }
+        .layout-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .component-icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .animation-icon { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .navigation-icon { background: linear-gradient(135deg, #00d4aa, #00a67d); }
+        .workflow-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+        }
+
+        .highlight-section {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .highlight-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .layer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .layer-table th,
+        .layer-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .layer-table th {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .layer-table code {
+            background: var(--bg-dark);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            color: var(--figma);
+        }
+
+        .animation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .animation-item {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .animation-item .name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .animation-item .desc {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .workflow-step {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .workflow-step:not(:last-child)::after {
+            content: '\2192';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        .workflow-step .number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--figma), var(--unity));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .workflow-step .title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .workflow-step .desc {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+            .workflow-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .workflow-step:nth-child(2)::after,
+            .workflow-step:nth-child(4)::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+            .workflow-step::after {
+                display: none;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Figma To Unity Pipeline</h1>
+        <p>Bridge design-to-development by converting Figma UI designs into production-ready Unity UGUI prefabs</p>
+        <span class="version-badge">Version 1.0.0</span>
+    </header>
+
+    <main class="container">
+        <!-- Workflow Overview -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon workflow-icon">W</span>
+                How It Works
+            </h2>
+            <p class="section-subtitle">From Figma design to playable Unity UI in four simple steps</p>
+
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="number">1</div>
+                    <div class="title">Design</div>
+                    <div class="desc">Create UI in Figma with layer naming conventions</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="number">2</div>
+                    <div class="title">Export</div>
+                    <div class="desc">Run the Figma plugin to export ZIP</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="number">3</div>
+                    <div class="title">Import</div>
+                    <div class="desc">Import JSON in Unity editor window</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="number">4</div>
+                    <div class="title">Play</div>
+                    <div class="desc">Production-ready prefabs with navigation</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Export & Import -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon export-icon">E</span>
+                Export & Import
+            </h2>
+            <p class="section-subtitle">Seamless transfer from design tool to game engine</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>One-Click Export</h3>
+                    <p>Export single frames or batch export all frames in a page to a single ZIP archive containing structured JSON and optimized PNGs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Scalable Assets</h3>
+                    <p>Export at 1x, 2x, 3x, or 4x resolution for crisp visuals on any display density without affecting layout calculations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>One-Click Import</h3>
+                    <p>Import exported JSON directly in Unity's editor window. Generates production-ready UGUI prefabs with all components configured.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Automatic Scene Setup</h3>
+                    <p>Auto-creates Canvas, EventSystem, and UIScreenManager if missing. Your scene is play-ready immediately after import.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Safe Re-import</h3>
+                    <p>Update designs and re-import without losing onClick handlers, custom MonoBehaviours, or inspector modifications.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Auto Re-import</h3>
+                    <p>Enable file watching to automatically re-import when export files change. Perfect for rapid iteration workflows.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout & Responsive -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon layout-icon">L</span>
+                Layout & Responsive Design
+            </h2>
+            <p class="section-subtitle">Pixel-perfect layouts that adapt to any screen size</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Auto-Layout Conversion</h3>
+                    <p>Figma auto-layouts become Unity HorizontalLayoutGroup or VerticalLayoutGroup with proper padding, spacing, and alignment.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Constraint System</h3>
+                    <p>Figma constraints (MIN, CENTER, MAX, STRETCH, SCALE) convert to Unity RectTransform anchors for responsive positioning.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Flex & Fill Support</h3>
+                    <p>Child flex/grow properties and FILL sizing modes translate to LayoutElement flexible width and height settings.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Space-Between Layout</h3>
+                    <p>Figma's space-between alignment creates invisible spacer GameObjects for proper distribution in Unity.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>9-Slice Backgrounds</h3>
+                    <p>Automatic 9-slice detection from Figma layer structure. Creates Unity sliced sprites with correct border values.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Rich Text Support</h3>
+                    <p>TextMeshPro components with font family, size, weight, spacing, alignment, case, and text decoration preserved.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layer Naming Conventions -->
+        <section class="highlight-section">
+            <h3>Layer Naming Conventions</h3>
+            <p>Use these prefixes in Figma layer names to control how elements are imported:</p>
+            <table class="layer-table">
+                <thead>
+                    <tr>
+                        <th>Prefix</th>
+                        <th>Behavior</th>
+                        <th>Unity Components</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>BTN_</code></td>
+                        <td>Button with baked composite image</td>
+                        <td>Image, Button</td>
+                    </tr>
+                    <tr>
+                        <td><code>IMG_</code></td>
+                        <td>Image sprite</td>
+                        <td>Image</td>
+                    </tr>
+                    <tr>
+                        <td><code>ICON_</code></td>
+                        <td>Icon sprite</td>
+                        <td>Image</td>
+                    </tr>
+                    <tr>
+                        <td><code>CTN_</code></td>
+                        <td>Container (no image, recurses children)</td>
+                        <td>RectTransform, LayoutGroup</td>
+                    </tr>
+                    <tr>
+                        <td><code>9SLICE_</code></td>
+                        <td>Scalable 9-slice background</td>
+                        <td>Image (Sliced)</td>
+                    </tr>
+                    <tr>
+                        <td><code>TEXT</code></td>
+                        <td>Native text (auto-detected)</td>
+                        <td>TextMeshProUGUI</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Components & Variants -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon component-icon">C</span>
+                Components & Variants
+            </h2>
+            <p class="section-subtitle">Design systems that work in both tools</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Component to Prefab</h3>
+                    <p>Figma components become Unity prefabs. Instances use proper prefab linking for consistent updates across your project.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Variant State System</h3>
+                    <p>Figma component variants with properties like "State=Hover" become switchable states via FigmaVariantController at runtime.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Button State Auto-Wiring</h3>
+                    <p>Buttons with Default/Hover/Pressed/Disabled variants automatically respond to pointer events without any code.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Runtime State Control</h3>
+                    <p>Switch variant states programmatically with exact or partial key matching: <code>controller.SetState("Hover")</code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation & Interactions -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon navigation-icon">N</span>
+                Navigation & Interactions
+            </h2>
+            <p class="section-subtitle">Prototype flows become working navigation</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Prototype-Driven Navigation</h3>
+                    <p>Connect screens in Figma's prototype mode. Navigation links are automatically wired to Unity button onClick events.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Screen Manager</h3>
+                    <p>Built-in UIScreenManager singleton handles Show(), Back(), navigation history, and screen lifecycle management.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Screen Transitions</h3>
+                    <p>Configurable fade transitions between screens with customizable duration, hold time, and fade color.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Camera Effects</h3>
+                    <p>Four camera transition effects: Shake, ZoomPulse, DollyForward, and Drift for cinematic screen changes.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>URL Actions</h3>
+                    <p>Figma prototype URL actions translate to Application.OpenURL calls, opening links in the system browser.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>3D Environment Support</h3>
+                    <p>Auto-load matching 3D environment prefabs when screens change for hybrid 2D UI over 3D world setups.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animations -->
+        <section>
+            <h2 class="section-title">
+                <span class="icon animation-icon">A</span>
+                Entry Animations
+            </h2>
+            <p class="section-subtitle">Polished UI motion out of the box</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Auto-Applied Animations</h3>
+                    <p>Entry animations automatically assigned based on layer prefix. Buttons pop in, images fade in, containers slide up.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Staggered Timing</h3>
+                    <p>Sibling elements animate with configurable stagger delay, creating a cascading reveal effect across the UI.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Spring Physics</h3>
+                    <p>PopIn animations feature spring overshoot and damping for organic, satisfying motion.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Custom Easing</h3>
+                    <p>Each animation supports custom AnimationCurve easing for precise control over motion timing.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">11 Animation Types</h3>
+            <div class="animation-grid">
+                <div class="animation-item">
+                    <div class="name">FadeIn</div>
+                    <div class="desc">Alpha 0 to 1</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">PopIn</div>
+                    <div class="desc">Scale with spring</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">SlideFromLeft</div>
+                    <div class="desc">Position slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">SlideFromRight</div>
+                    <div class="desc">Position slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">SlideFromTop</div>
+                    <div class="desc">Position slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">SlideFromBottom</div>
+                    <div class="desc">Position slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">FadeSlideUp</div>
+                    <div class="desc">Alpha + slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">FadeSlideDown</div>
+                    <div class="desc">Alpha + slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">FadeSlideLeft</div>
+                    <div class="desc">Alpha + slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">FadeSlideRight</div>
+                    <div class="desc">Alpha + slide</div>
+                </div>
+                <div class="animation-item">
+                    <div class="name">FadePopIn</div>
+                    <div class="desc">Alpha + scale</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Developer Experience -->
+        <section style="margin-top: 3rem;">
+            <h2 class="section-title">
+                <span class="icon workflow-icon">D</span>
+                Developer Experience
+            </h2>
+            <p class="section-subtitle">Built for real production workflows</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Zero-Code UI Setup</h3>
+                    <p>Designers create in Figma, developers import with one click. Working UI without writing layout code.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Iterative Updates</h3>
+                    <p>Re-export and re-import preserves developer customizations while updating visuals from the latest design.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Node Identity Tracking</h3>
+                    <p>Each node tracks its Figma ID via FigmaNodeKey. Renamed or moved elements stay linked across re-imports.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Orphan Cleanup</h3>
+                    <p>Nodes deleted in Figma are automatically removed from Unity prefabs, keeping your hierarchy clean.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Configurable PPU</h3>
+                    <p>Adjustable Pixels Per Unit setting for sprite sizing. Match your project's existing scale conventions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Optional Extras</h3>
+                    <p>Generate 3D environment prefabs, screen transition prefabs, or video plane prefabs alongside screens.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Figma Importer for Unity v1.0.0</p>
+        <p style="margin-top: 0.5rem;"><a href="documentation.html">View Full Documentation</a></p>
+    </footer>
+</body>
+</html>
