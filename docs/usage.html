@@ -37,6 +37,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+        }
+
+        .header-logo {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
         }
 
         .header h1 {
@@ -166,6 +176,7 @@
 </head>
 <body>
     <header class="header">
+        <img src="logo.png" alt="Atomic Veggie Studios" class="header-logo">
         <h1>How To Use</h1>
         <p>Three simple steps from Figma to Unity</p>
     </header>
