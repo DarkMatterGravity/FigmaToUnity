@@ -12,7 +12,8 @@
       "Bash(gh api:*)",
       "Bash(git push:*)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(gh repo view:*)"
     ]
   }
 }

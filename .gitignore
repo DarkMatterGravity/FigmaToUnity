@@ -56,6 +56,5 @@ sysinfo.txt
 # Node modules (Figma plugin)
 FigmaPlugin/node_modules/
 
-# Figma plugin build output
-FigmaPlugin/code.js
+# Figma plugin source maps (not needed for distribution)
 FigmaPlugin/code.js.map
