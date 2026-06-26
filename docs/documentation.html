@@ -34,9 +34,57 @@
             line-height: 1.7;
         }
 
+        .header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .top-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .top-nav a:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .top-nav a.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
         .layout {
             display: flex;
-            min-height: 100vh;
+            min-height: calc(100vh - 140px);
         }
 
         /* Sidebar Navigation */
@@ -238,6 +286,18 @@
     </style>
 </head>
 <body>
+    <header class="header">
+        <h1>Documentation</h1>
+        <p>Complete reference for the Figma To Unity Pipeline</p>
+    </header>
+
+    <nav class="top-nav">
+        <a href="features.html">Features</a>
+        <a href="setup.html">Setup Guide</a>
+        <a href="usage.html">How To Use</a>
+        <a href="documentation.html" class="active">Documentation</a>
+    </nav>
+
     <div class="layout">
         <nav class="sidebar">
             <div class="sidebar-header">
