@@ -104,7 +104,7 @@
         .step-number {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--figma), var(--unity));
+            background: #F24E1E;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -201,20 +201,19 @@
         }
 
         .req-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
             flex-shrink: 0;
         }
 
-        .req-icon.unity { background: linear-gradient(135deg, #00d4aa, #00a67d); }
-        .req-icon.figma { background: linear-gradient(135deg, #ff7262, #f24e1e); }
-        .req-icon.node { background: linear-gradient(135deg, #68a063, #3c873a); }
-        .req-icon.python { background: linear-gradient(135deg, #4b8bbe, #306998); }
+        .req-icon img, .req-icon svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
         .req-text {
             font-size: 0.9375rem;
@@ -306,21 +305,27 @@
                 <p>Make sure you have these installed before starting:</p>
                 <div class="requirements">
                     <div class="req-item">
-                        <div class="req-icon unity">U</div>
+                        <div class="req-icon">
+                            <svg viewBox="0 0 128 128"><path fill="#ffffff" d="M82.48 63.578l22.418 22.418-59.127 40.139a4.96 4.96 0 01-5.418.128L2.124 67.725a4.96 4.96 0 010-7.086l38.229-58.54a4.96 4.96 0 015.418.13zm-5.336-5.336L36.016 17.114 95.143 57.25a4.96 4.96 0 010 7.086L54.672 122.79l40.86-27.734z"/><path fill="#ffffff" d="M77.914 58.908L95.143 57.25a4.96 4.96 0 000-7.086L56.914 8.623a4.957 4.957 0 00-5.418-.128l-15.48 10.52 41.898 39.893z"/></svg>
+                        </div>
                         <div class="req-text">
                             <div class="name">Unity</div>
                             <div class="version">2021.3 or later</div>
                         </div>
                     </div>
                     <div class="req-item">
-                        <div class="req-icon figma">F</div>
+                        <div class="req-icon">
+                            <svg viewBox="0 0 38 57" fill="none"><path fill="#F24E1E" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#FF7262" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#A259FF" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#1ABCFE" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#0ACF83" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
+                        </div>
                         <div class="req-text">
                             <div class="name">Figma Desktop</div>
                             <div class="version">Latest version</div>
                         </div>
                     </div>
                     <div class="req-item">
-                        <div class="req-icon python">P</div>
+                        <div class="req-icon">
+                            <svg viewBox="0 0 128 128"><linearGradient id="a" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><path fill="url(#a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z"/><linearGradient id="b" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z"/></svg>
+                        </div>
                         <div class="req-text">
                             <div class="name">Python</div>
                             <div class="version">3.8+ (optional, for helper)</div>
