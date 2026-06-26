@@ -113,16 +113,10 @@ string current = UIScreenManager.CurrentScreen;
 
 - Unity 2021.3+
 - TextMeshPro (included with Unity)
-- Node.js + npm (for building Figma plugin)
+- Figma Desktop (for running the plugin)
+- Python 3.8+ (optional, for export helper)
 
-## Build Commands
-
-### Figma Plugin
-```bash
-cd FigmaPlugin
-npm install
-npm run build    # Creates code.js from code.ts
-```
+**Note:** No build step required - compiled `code.js` is included in repo.
 
 ## Key Files to Know
 
@@ -134,6 +128,52 @@ npm run build    # Creates code.js from code.ts
 | `FigmaVariantController.cs` | Variant state switching |
 | `FigmaEntryAnimation.cs` | All animation types |
 | `code.ts:exportTree()` | Figma node traversal |
+
+## GitHub Repository & Pages
+
+- **Repository:** https://github.com/DarkMatterGravity/FigmaToUnity
+- **GitHub Pages:** https://darkmattergravity.github.io/FigmaToUnity/
+
+### Documentation Pages (in `/docs/`)
+| Page | URL | Purpose |
+|------|-----|---------|
+| Features | `/features.html` | Product feature showcase |
+| Setup Guide | `/setup.html` | Installation steps |
+| How To Use | `/usage.html` | Simple 3-step usage guide |
+| Documentation | `/documentation.html` | Full technical reference |
+
+### Marketing Assets (in `/MarketingAssets/`)
+- `GraphImageF2U.png` - Product graphic for marketing
+- `BG.webp` - Aurora header background (also copied to `/docs/header-bg.webp`)
+
+## Figma Plugin Details
+
+### Plugin Window Size
+- Width: 580px
+- Height: 920px
+- Configured in `code.ts` line 16: `figma.showUI(__html__, { width: 580, height: 920 })`
+
+### Export Helper Script
+- `FigmaPlugin/figma_export_helper.py` - Local Python server for direct folder export
+- Runs on `http://localhost:9876`
+- Features:
+  - `/browse` endpoint opens native folder picker dialog (uses tkinter)
+  - Direct file save to specified folder
+  - Auto-cleans `_Images` folders on re-export
+
+### Plugin UI Features
+- Image scale selector (1x default, up to 4x)
+- Browse button for folder picker (requires helper running)
+- Export Selected Frame / Export All Frames
+- Save to Folder / Download ZIP options
+- Layer naming conventions reference
+
+## Styling Conventions (Documentation Pages)
+
+- **Figma Orange:** `#F24E1E` - Used for all step number circles
+- **Header Background:** Aurora image with dark overlay gradient
+- **Navigation:** Consistent top nav bar on all pages
+- **Logos:** Inline SVGs for Unity, Figma, Python in requirements
 
 ## TODOs / Future Work
 
