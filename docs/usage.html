@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma To Unity Pipeline - How To Use</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --figma: #ff7262;
+            --unity: #00d4aa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav a.active { color: var(--primary); background: rgba(99, 102, 241, 0.1); }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .step-num {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--figma), var(--unity));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.875em;
+            color: var(--figma);
+        }
+
+        .layer-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            margin-top: 1rem;
+            background: var(--bg-card);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .layer-grid code {
+            justify-self: start;
+        }
+
+        .layer-grid span {
+            color: var(--text-muted);
+        }
+
+        .tip {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--unity);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>How To Use</h1>
+        <p>Three simple steps from Figma to Unity</p>
+    </header>
+
+    <nav class="nav">
+        <a href="features.html">Features</a>
+        <a href="setup.html">Setup Guide</a>
+        <a href="usage.html" class="active">How To Use</a>
+        <a href="documentation.html">Documentation</a>
+    </nav>
+
+    <main class="container">
+        <!-- Step 1 -->
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h2>Name Your Layers</h2>
+                <p>Add prefixes to control how elements are imported:</p>
+                <div class="layer-grid">
+                    <code>BTN_</code> <span>Clickable button</span>
+                    <code>IMG_</code> <span>Static image</span>
+                    <code>ICON_</code> <span>Icon image</span>
+                    <code>CTN_</code> <span>Container (no image)</span>
+                    <code>9SLICE_</code> <span>Scalable background</span>
+                </div>
+                <div class="tip">
+                    <div class="tip-title">Text is automatic</div>
+                    <p>Text layers become TextMeshPro without any prefix needed.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h2>Export from Figma</h2>
+                <p>Select your frame, run the plugin, click <strong>Export Selected Frame</strong>, then <strong>Download ZIP</strong>.</p>
+                <p>Extract the ZIP to your Unity project's Assets folder.</p>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h2>Import to Unity</h2>
+                <p>Go to <strong>Tools > Figma > Import to Unity...</strong></p>
+                <p>Select the <code>*_Screen.json</code> file and click <strong>Import</strong>.</p>
+                <div class="tip">
+                    <div class="tip-title">Your prefab is ready</div>
+                    <p>Find it in <code>Resources/Screens/</code> - press Play to see it!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bonus: Navigation -->
+        <div class="step">
+            <div class="step-num">+</div>
+            <div class="step-content">
+                <h2>Add Navigation (Optional)</h2>
+                <p>In Figma's Prototype tab, connect buttons to other frames.</p>
+                <p>The importer wires these up automatically - clicks navigate between screens.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Figma To Unity Pipeline v1.0.0</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="features.html">Features</a> &bull;
+            <a href="setup.html">Setup Guide</a> &bull;
+            <a href="documentation.html">Full Documentation</a>
+        </p>
+    </footer>
+</body>
+</html>
