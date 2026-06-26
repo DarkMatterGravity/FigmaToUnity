@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma To Unity Pipeline - Setup Guide</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-code: #0d1117;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --figma: #ff7262;
+            --unity: #00d4aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav a.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--figma), var(--unity));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-size: 1.375rem;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .step-content ul, .step-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+            font-size: 0.875em;
+            color: var(--figma);
+        }
+
+        pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .callout {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+        }
+
+        .callout.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: var(--success);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .req-item {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .req-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .req-icon.unity { background: linear-gradient(135deg, #00d4aa, #00a67d); }
+        .req-icon.figma { background: linear-gradient(135deg, #ff7262, #f24e1e); }
+        .req-icon.node { background: linear-gradient(135deg, #68a063, #3c873a); }
+        .req-icon.python { background: linear-gradient(135deg, #4b8bbe, #306998); }
+
+        .req-text {
+            font-size: 0.9375rem;
+        }
+
+        .req-text .name {
+            font-weight: 600;
+        }
+
+        .req-text .version {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        .file-tree {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .file-tree .folder { color: var(--unity); }
+        .file-tree .file { color: var(--text-muted); }
+        .file-tree .highlight { color: var(--figma); font-weight: 600; }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .quick-start {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.1));
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-start h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .quick-start ol {
+            padding-left: 1.5rem;
+        }
+
+        .quick-start li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Setup Guide</h1>
+        <p>Get the Figma To Unity Pipeline running in minutes</p>
+    </header>
+
+    <nav class="nav">
+        <a href="features.html">Features</a>
+        <a href="setup.html" class="active">Setup Guide</a>
+        <a href="documentation.html">Documentation</a>
+    </nav>
+
+    <main class="container">
+        <!-- Requirements -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">0</div>
+                <h2 class="step-title">Requirements</h2>
+            </div>
+            <div class="step-content">
+                <p>Make sure you have these installed before starting:</p>
+                <div class="requirements">
+                    <div class="req-item">
+                        <div class="req-icon unity">U</div>
+                        <div class="req-text">
+                            <div class="name">Unity</div>
+                            <div class="version">2021.3 or later</div>
+                        </div>
+                    </div>
+                    <div class="req-item">
+                        <div class="req-icon figma">F</div>
+                        <div class="req-text">
+                            <div class="name">Figma Desktop</div>
+                            <div class="version">Latest version</div>
+                        </div>
+                    </div>
+                    <div class="req-item">
+                        <div class="req-icon node">N</div>
+                        <div class="req-text">
+                            <div class="name">Node.js</div>
+                            <div class="version">16.x or later</div>
+                        </div>
+                    </div>
+                    <div class="req-item">
+                        <div class="req-icon python">P</div>
+                        <div class="req-text">
+                            <div class="name">Python</div>
+                            <div class="version">3.8+ (optional, for helper)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 1: Unity Package -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2 class="step-title">Install Unity Package</h2>
+            </div>
+            <div class="step-content">
+                <p>Copy the <code>Assets/FigmaImporter</code> folder into your Unity project:</p>
+                <div class="file-tree">
+                    <span class="folder">YourUnityProject/</span><br>
+                    &nbsp;&nbsp;<span class="folder">Assets/</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder highlight">FigmaImporter/</span> <span class="file">&larr; Copy this folder here</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">Editor/</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">Runtime/</span>
+                </div>
+                <p>Unity will automatically import the package. You should now see <strong>Tools > Figma > Import to Unity...</strong> in the menu bar.</p>
+                <div class="callout success">
+                    <div class="callout-title">TextMeshPro Required</div>
+                    <p>If prompted, install TextMeshPro essentials via <strong>Window > TextMeshPro > Import TMP Essential Resources</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Build Figma Plugin -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2 class="step-title">Build the Figma Plugin</h2>
+            </div>
+            <div class="step-content">
+                <p>Open a terminal in the <code>FigmaPlugin</code> folder and run:</p>
+<pre><code>cd FigmaPlugin
+npm install
+npm run build</code></pre>
+                <p>This compiles <code>code.ts</code> into <code>code.js</code> which Figma needs to run the plugin.</p>
+                <div class="callout">
+                    <div class="callout-title">Build Output</div>
+                    <p>You should see: <code>code.js  178.0kb</code> and <code>Done in XXms</code></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Import Plugin to Figma -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2 class="step-title">Import Plugin to Figma</h2>
+            </div>
+            <div class="step-content">
+                <ol>
+                    <li>Open <strong>Figma Desktop</strong> (not the web version)</li>
+                    <li>Go to <strong>Plugins > Development > Import plugin from manifest...</strong></li>
+                    <li>Navigate to the <code>FigmaPlugin</code> folder</li>
+                    <li>Select <code>manifest.json</code> and click <strong>Open</strong></li>
+                </ol>
+                <p>The plugin is now installed. Access it via <strong>Plugins > Development > Figma to Unity UGUI Exporter</strong>.</p>
+                <div class="callout warning">
+                    <div class="callout-title">Plugin Location</div>
+                    <p>Don't move the FigmaPlugin folder after importing. Figma references the files at their original location.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Export Helper (Optional) -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2 class="step-title">Start Export Helper (Optional)</h2>
+            </div>
+            <div class="step-content">
+                <p>The helper script lets you save exports directly to a folder and use the Browse button. Run it in a terminal:</p>
+<pre><code>cd FigmaPlugin
+python figma_export_helper.py</code></pre>
+                <p>Leave it running while you work. You'll see:</p>
+<pre><code>==================================================
+  Figma Export Helper
+==================================================
+
+Listening on: http://localhost:9876
+
+Set your export path in the Figma plugin UI,
+then click 'Save to Folder' to export directly.</code></pre>
+                <div class="callout">
+                    <div class="callout-title">Without the Helper</div>
+                    <p>You can still use <strong>Download ZIP</strong> in the plugin and manually extract files to your Unity project.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: Test the Pipeline -->
+        <section class="step">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2 class="step-title">Test the Pipeline</h2>
+            </div>
+            <div class="step-content">
+                <ol>
+                    <li><strong>In Figma:</strong> Create or open a design with a Frame</li>
+                    <li><strong>Run the plugin:</strong> Plugins > Development > Figma to Unity UGUI Exporter</li>
+                    <li><strong>Select a frame</strong> in your design</li>
+                    <li><strong>Click "Export Selected Frame"</strong></li>
+                    <li><strong>Click "Download ZIP"</strong> (or "Save to Folder" if helper is running)</li>
+                    <li><strong>Extract the ZIP</strong> to your Unity project's Assets folder</li>
+                    <li><strong>In Unity:</strong> Go to <strong>Tools > Figma > Import to Unity...</strong></li>
+                    <li><strong>Click Browse</strong> and select the <code>*_Screen.json</code> file</li>
+                    <li><strong>Click Import</strong></li>
+                </ol>
+                <div class="callout success">
+                    <div class="callout-title">Success!</div>
+                    <p>Your Figma design is now a Unity prefab in <code>Resources/Screens/</code>. Press Play to see it!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Summary -->
+        <section class="quick-start">
+            <h2>Quick Reference</h2>
+            <p>Once set up, your daily workflow is:</p>
+            <ol>
+                <li>Design in Figma using layer prefixes (<code>BTN_</code>, <code>IMG_</code>, <code>CTN_</code>, etc.)</li>
+                <li>Run the plugin and click <strong>Export Selected Frame</strong></li>
+                <li>Save or download to your Unity project</li>
+                <li>In Unity, use <strong>Tools > Figma > Import to Unity...</strong></li>
+                <li>Select the JSON file and click <strong>Import</strong></li>
+            </ol>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Figma To Unity Pipeline v1.0.0</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="features.html">Features</a> &bull;
+            <a href="documentation.html">Full Documentation</a>
+        </p>
+    </footer>
+</body>
+</html>

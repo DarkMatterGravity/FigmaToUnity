@@ -245,8 +245,8 @@
             <div class="field">
               <label for="scale">Image Scale</label>
               <select id="scale">
-                <option value="1">1x</option>
-                <option value="2" selected>2x</option>
+                <option value="1" selected>1x</option>
+                <option value="2">2x</option>
                 <option value="3">3x</option>
                 <option value="4">4x</option>
               </select>
@@ -256,7 +256,10 @@
 
           <div style="margin-top:12px">
             <label for="exportPath">Export Path (for Save to Folder)</label>
-            <input type="text" id="exportPath" placeholder="D:\MyProject\Assets\UI" />
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="exportPath" placeholder="D:\MyProject\Assets\UI" style="flex:1;" />
+              <button id="browseBtn" style="width:80px; flex-shrink:0;">Browse</button>
+            </div>
             <div class="hint">Files save directly here when using "Save to Folder" (requires helper running)</div>
           </div>
 
@@ -300,6 +303,7 @@
     // ------- DOM -------
     const scaleEl = document.getElementById("scale");
     const exportPathEl = document.getElementById("exportPath");
+    const browseBtn = document.getElementById("browseBtn");
     const exportBtn = document.getElementById("exportBtn");
     const exportAllBtn = document.getElementById("exportAllBtn");
     const saveToFolderBtn = document.getElementById("saveToFolderBtn");
@@ -435,6 +439,44 @@
       resetDownload();
       log("Cleared. Ready to export.", "ok");
       parent.postMessage({ pluginMessage: { type: "CLEAR" } }, "*");
+    };
+
+    browseBtn.onclick = async () => {
+      browseBtn.disabled = true;
+      browseBtn.textContent = "...";
+
+      // Create an AbortController with a long timeout (folder dialog can take a while)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min timeout
+
+      try {
+        const response = await fetch(HELPER_URL + "/browse", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ currentPath: exportPathEl.value || "" }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        const result = await response.json();
+        if (result.status === "ok" && result.path) {
+          exportPathEl.value = result.path;
+          localStorage.setItem("figmaExportPath", result.path);
+          log("Selected: " + result.path, "ok");
+        } else if (result.status === "cancelled") {
+          log("Folder selection cancelled.", "warn");
+        } else {
+          log("Browse: " + (result.message || "No folder selected"), "warn");
+        }
+      } catch (e) {
+        clearTimeout(timeoutId);
+        // Only show error if it's not an abort
+        if (e.name !== 'AbortError') {
+          log("Helper not running. Type path manually or run figma_export_helper.py", "warn");
+        }
+      } finally {
+        browseBtn.disabled = false;
+        browseBtn.textContent = "Browse";
+      }
     };
 
     saveToFolderBtn.onclick = () => {

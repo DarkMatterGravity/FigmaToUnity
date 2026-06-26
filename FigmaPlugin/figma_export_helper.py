@@ -14,6 +14,8 @@ import json
 import os
 import base64
 import shutil
+import tkinter as tk
+from tkinter import filedialog
 
 PORT = 9876
 
@@ -28,6 +30,70 @@ class FigmaExportHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
+        """Handle requests from Figma plugin."""
+        # Handle browse request for folder picker
+        if self.path == '/browse':
+            self._handle_browse()
+            return
+
+        # Handle file export request
+        self._handle_export()
+
+    def _handle_browse(self):
+        """Open a folder picker dialog and return the selected path."""
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length > 0:
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data)
+                current_path = data.get('currentPath', '')
+            else:
+                current_path = ''
+
+            # Create a hidden root window for the dialog
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes('-topmost', True)
+            root.focus_force()
+
+            # Open folder picker
+            initial_dir = current_path if current_path and os.path.isdir(current_path) else os.path.expanduser('~')
+            selected_path = filedialog.askdirectory(
+                title="Select Export Folder",
+                initialdir=initial_dir
+            )
+
+            root.destroy()
+
+            # Send response
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+
+            if selected_path:
+                print(f"Folder selected: {selected_path}")
+                self.wfile.write(json.dumps({
+                    'status': 'ok',
+                    'path': selected_path
+                }).encode())
+            else:
+                self.wfile.write(json.dumps({
+                    'status': 'cancelled'
+                }).encode())
+
+        except Exception as e:
+            print(f"Browse error: {e}")
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                'status': 'error',
+                'message': str(e)
+            }).encode())
+
+    def _handle_export(self):
         """Handle file export requests from Figma plugin."""
         try:
             content_length = int(self.headers['Content-Length'])

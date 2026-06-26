@@ -13,7 +13,7 @@ if (typeof g.clearImmediate !== "function") {
 
 import JSZip from "jszip";
 
-figma.showUI(__html__, { width: 400, height: 720 });
+figma.showUI(__html__, { width: 580, height: 920 });
 
 type ExportMsg =
     | { type: "EXPORT"; scale?: number }
