@@ -95,12 +95,41 @@
             font-size: 1.25rem;
         }
 
-        .export-icon { background: linear-gradient(135deg, #ff7262, #f24e1e); }
-        .layout-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .component-icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-        .animation-icon { background: linear-gradient(135deg, #ec4899, #db2777); }
-        .navigation-icon { background: linear-gradient(135deg, #00d4aa, #00a67d); }
-        .workflow-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .export-icon { background: #F24E1E; }
+        .layout-icon { background: #F24E1E; }
+        .component-icon { background: #F24E1E; }
+        .animation-icon { background: #F24E1E; }
+        .navigation-icon { background: #F24E1E; }
+        .workflow-icon { background: #F24E1E; }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav a.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
 
         .features-grid {
             display: grid;
@@ -233,7 +262,7 @@
         .workflow-step .number {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, var(--figma), var(--unity));
+            background: #F24E1E;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -295,6 +324,13 @@
         <p>Bridge design-to-development by converting Figma UI designs into production-ready Unity UGUI prefabs</p>
         <span class="version-badge">Version 1.0.0</span>
     </header>
+
+    <nav class="nav">
+        <a href="features.html" class="active">Features</a>
+        <a href="setup.html">Setup Guide</a>
+        <a href="usage.html">How To Use</a>
+        <a href="documentation.html">Documentation</a>
+    </nav>
 
     <main class="container">
         <!-- Workflow Overview -->
